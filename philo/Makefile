@@ -8,6 +8,8 @@ SRCS	= main.c
 
 RM		= rm -rf
 
+HEADER	= libphilo.h
+
 OBJS	= $(SRCS:.c=.o)
 
 all : $(NAME)
@@ -16,7 +18,7 @@ $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $^
 	@echo "...Linking objs."
 
-%.o : %.c
+%.o : %.c $(HEADER)
 	@$(CC) $(CFLAGS) -c -o $@ $<
 	@echo "...Compiling srcs."
 
