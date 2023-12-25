@@ -2,9 +2,9 @@ CC		= cc
 
 NAME	= philo
 
-CFLAGS	= -Wall -Werror -Wextra -pthread
+CFLAGS	= -Wall -Werror -Wextra -pthread -g
 
-SRCS	= main.c err_exit.c
+SRCS	= main.c err_exit.c errno_exit.c
 
 RM		= rm -rf
 
@@ -20,7 +20,7 @@ $(NAME) : $(OBJS)
 
 %.o : %.c $(INCLUDE)
 	@$(CC) $(CFLAGS) -c -o $@ $<
-	@echo "...Compiling srcs."
+	@echo "...Compiling $(notdir $<)."
 
 clean :
 	@$(RM) $(OBJS)
@@ -32,4 +32,11 @@ fclean : clean
 
 re : fclean all
 
-.PHONY : all clean fclean re
+debug:
+	make re
+	export MallocStackLogging=1
+	export MallocStackLoggingNoCompact=1
+	leaks --atExit -- ./$(NAME) > log.txt 2>&1
+	make fclean
+
+.PHONY : all clean fclean re debug
