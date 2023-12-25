@@ -4,6 +4,8 @@
 # include <pthread.h>
 # include <stdio.h>
 # include <unistd.h>
+# include <string.h>
+# include "errors.h"
 
 /* main.c */
 

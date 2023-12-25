@@ -4,11 +4,11 @@ NAME	= philo
 
 CFLAGS	= -Wall -Werror -Wextra -pthread
 
-SRCS	= main.c
+SRCS	= main.c err_exit.c
 
 RM		= rm -rf
 
-HEADER	= libphilo.h
+INCLUDE	= libphilo.h errors.h
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -18,7 +18,7 @@ $(NAME) : $(OBJS)
 	@$(CC) $(CFLAGS) -o $(NAME) $^
 	@echo "...Linking objs."
 
-%.o : %.c $(HEADER)
+%.o : %.c $(INCLUDE)
 	@$(CC) $(CFLAGS) -c -o $@ $<
 	@echo "...Compiling srcs."
 
