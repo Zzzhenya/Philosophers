@@ -6,22 +6,27 @@ CFLAGS	= -Wall -Werror -Wextra -pthread
 
 SRCS	= main.c
 
-OBJS	= $(SRCS:.c=.o)
+RM		= rm -rf
 
+OBJS	= $(SRCS:.c=.o)
 
 all : $(NAME)
 
-%.o : %.c
-	$(CC) $(CFLAGS) -c -o $@ $<
-
 $(NAME) : $(OBJS)
-	$(CC) $(CFLAGS) -o $(NAME) $^
+	@$(CC) $(CFLAGS) -o $(NAME) $^
+	@echo "...Linking objs."
+
+%.o : %.c
+	@$(CC) $(CFLAGS) -c -o $@ $<
+	@echo "...Compiling srcs."
 
 clean :
-	rm -rf $(OBJS)
+	@$(RM) $(OBJS)
+	@echo "...Removing objs."
 
 fclean : clean
-	rm -rf $(NAME)
+	@$(RM) $(NAME)
+	@echo "...Removing binary."
 
 re : fclean all
 
