@@ -2,24 +2,32 @@
 
 static void	*threadfunc(void *arg)
 {
-	char *s;
+	long *s;
 
-	s = (char *)arg;
-	printf("%s\n", s);
-	return ((void *) strlen(s));
+	s = (long *)arg;
+	printf("Message from t%ld\n", *s);
+	sleep(1);
+	printf("End...t%ld\n", *s);
+	return ((void *)s);
 }
 
 int main(void)
 {
-	pthread_t t1;
+	pthread_t t1, t2;
 	void	*res;
+	long val1 = 1;
+	long val2 = 2;
 
-	if (pthread_create(&t1, NULL, threadfunc, "Hello World!") != 0)
 	//int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);
+	if (pthread_create(&t1, NULL, threadfunc, &val1) != 0)
+		err_exit("pthread_create() error.");
+	if (pthread_create(&t2, NULL, threadfunc, &val2) != 0)
 		err_exit("pthread_create() error.");
 	if (pthread_join(t1, &res) != 0)
 		err_exit("pthread_join() error.");
-	printf("Thread returned %ld\n", (long)res);
-	system("leaks ./philo");
+	printf("Thread t1 returned %ld\n", *(long *)res);
+	if (pthread_join(t2, &res) != 0)
+		err_exit("pthread_join() error.");
+	printf("Thread t2 returned %ld\n", *(long *)res);
 	return (0);
 }
