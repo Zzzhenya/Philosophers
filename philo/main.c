@@ -1,27 +1,30 @@
 #include "libphilo.h"
 
-static void	*threadfunc(void *arg)
-{
-	long *s;
+long i = 0;
 
-	s = (long *)arg;
-	printf("Message from t%ld\n", *s);
-	sleep(1);
-	printf("End...t%ld\n", *s);
-	return ((void *)s);
+static void	*threadfunc()
+{
+	int count = 0;
+	
+	while (count < 10)
+	{
+		printf("Message from thread: i:%ld\n", i ++);
+		count ++;
+		usleep(1000);
+	}
+	printf("End...i: %ld\n", i);
+	return ((void *)i);
 }
 
 int main(void)
 {
 	pthread_t t1, t2;
 	void	*res;
-	long val1 = 1;
-	long val2 = 2;
 
 	//int pthread_create(pthread_t *thread, const pthread_attr_t *attr, void *(*start_routine)(void *), void *arg);
-	if (pthread_create(&t1, NULL, threadfunc, &val1) != 0)
+	if (pthread_create(&t1, NULL, threadfunc, NULL) != 0)
 		err_exit("pthread_create() error.");
-	if (pthread_create(&t2, NULL, threadfunc, &val2) != 0)
+	if (pthread_create(&t2, NULL, threadfunc, NULL) != 0)
 		err_exit("pthread_create() error.");
 	if (pthread_join(t1, &res) != 0)
 		err_exit("pthread_join() error.");
