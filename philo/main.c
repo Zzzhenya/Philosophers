@@ -1,5 +1,5 @@
 #include "libphilo.h"
-
+/*
 long i = 0;
 pthread_mutex_t mutex;
 
@@ -36,4 +36,49 @@ int main(void)
 		err_exit("pthread_join() error.");
 	pthread_mutex_destroy(&mutex);
 	return (0);
+}*/
+
+void print_details(t_input *input)
+{
+	printf("Philos: %d\n", input->philos);
+	printf("t_die: %d\n", input->t_die);
+	printf("t_eat: %d\n", input->t_eat);
+	printf("t_sleep: %d\n", input->t_sleep);
+	if (input->min_eat)
+		printf("min_eat: %d\n", input->min_eat);
+
 }
+
+int	main(int argc, char **argv)
+{
+	t_input	input;
+
+	if (argc == 5)
+	{
+		input.philos = atoi(argv[1]);
+		input.t_die = atoi(argv[2]);
+		input.t_eat = atoi(argv[3]);
+		input.t_sleep = atoi(argv[4]);
+		print_details(&input);
+	}
+	else if (argc == 6)
+	{
+		input.philos = atoi(argv[1]);
+		input.t_die = atoi(argv[2]);
+		input.t_eat = atoi(argv[3]);
+		input.t_sleep = atoi(argv[4]);
+		input.min_eat = atoi(argv[5]);
+		print_details(&input);
+	}
+	else
+		write(1, "Usage: #philo t_die t_eat t_sleep [min_eat_times]\n", 50);
+	return (0);
+}
+
+
+
+
+
+
+
+
