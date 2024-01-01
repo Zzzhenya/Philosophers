@@ -2,9 +2,12 @@ CC		= cc
 
 NAME	= philo
 
-CFLAGS	= -Wall -Werror -Wextra -pthread -g
+CFLAGS	= -Wall -Werror -Wextra -pthread
 
-SRCS	= main.c err_exit.c errno_exit.c
+#CFLAGS 	+= -g -fsanitize=thread 
+
+SRCS	= 	main.c parse_and_store.c \
+			print_message.c
 
 RM		= rm -rf
 
@@ -32,11 +35,14 @@ fclean : clean
 
 re : fclean all
 
-debug:
+race:
 	make re
-	export MallocStackLogging=1
-	export MallocStackLoggingNoCompact=1
-	leaks --atExit -- ./$(NAME) > log.txt 2>&1
-	make fclean
 
-.PHONY : all clean fclean re debug
+#debug:
+#	make re
+#	export MallocStackLogging=1
+#	export MallocStackLoggingNoCompact=1
+#	leaks --atExit -- ./$(NAME) > log.txt 2>&1
+#	make fclean
+
+.PHONY : all clean fclean re debug race

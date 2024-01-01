@@ -51,27 +51,33 @@ void print_details(t_input *input)
 
 int	main(int argc, char **argv)
 {
-	t_input	input;
+	t_input	 *input;
+	//struct timeval currt;
 
-	if (argc == 5)
+	//gettimeofday(&currt, NULL);
+	input = NULL;
+	if (argc == 5 || argc == 6)
 	{
-		input.philos = atoi(argv[1]);
-		input.t_die = atoi(argv[2]);
-		input.t_eat = atoi(argv[3]);
-		input.t_sleep = atoi(argv[4]);
-		print_details(&input);
-	}
-	else if (argc == 6)
-	{
-		input.philos = atoi(argv[1]);
-		input.t_die = atoi(argv[2]);
-		input.t_eat = atoi(argv[3]);
-		input.t_sleep = atoi(argv[4]);
-		input.min_eat = atoi(argv[5]);
-		print_details(&input);
+		if (!parse(argv))
+			return (1);
+		input = malloc(sizeof(t_input));
+		if (!input)
+		{
+			print_message("Malloc failed.", 2);
+			return (1);
+		}
+		if (!store(argv, argc, input))
+		{
+			print_message("Values should be larger than 0.", 2);
+			free (input);
+			return (1);
+		}
+		print_details(input);
+		free (input);
 	}
 	else
 		write(1, "Usage: #philo t_die t_eat t_sleep [min_eat_times]\n", 50);
+
 	return (0);
 }
 
