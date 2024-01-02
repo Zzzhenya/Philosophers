@@ -7,7 +7,7 @@ CFLAGS	= -Wall -Werror -Wextra -pthread
 #CFLAGS 	+= -g -fsanitize=thread 
 
 SRCS	= 	main.c parse_and_store.c \
-			print_message.c
+			print_message.c init.c
 
 RM		= rm -rf
 

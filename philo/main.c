@@ -40,21 +40,36 @@ int main(void)
 
 void print_details(t_input *input)
 {
+	int i = 0;
 	printf("Philos: %d\n", input->philos);
 	printf("t_die: %d\n", input->t_die);
 	printf("t_eat: %d\n", input->t_eat);
 	printf("t_sleep: %d\n", input->t_sleep);
 	if (input->min_eat)
 		printf("min_eat: %d\n", input->min_eat);
-
+	while (i < input->philos)
+	{
+		printf("\nPhilo %d\n", i);
+		printf("Philo_id: %d\n", input->philo_arr[i].philo_id);
+		printf("Thread: %p\n", input->philo_arr[i].thread);
+		printf("Last_eat: %ld\n", input->philo_arr[i].last_eat_time);
+		//printf("Fork_l: @%p : %d\n", input->philo_arr[i].fork_l, *input->philo_arr[i].fork_l);
+		//printf("Fork_r: @%p : %d\n", input->philo_arr[i].fork_r, *input->philo_arr[i].fork_r);
+		i ++; 
+	}
+	i = 0;
+	printf("Forks\n");
+	while (i < input->philos)
+	{
+		printf("Fork %d: @%p : %d\n", i, &input->forks_arr[i], input->forks_arr[i]);
+		i ++;
+	}
 }
 
 int	main(int argc, char **argv)
 {
 	t_input	 *input;
-	//struct timeval currt;
 
-	//gettimeofday(&currt, NULL);
 	input = NULL;
 	if (argc == 5 || argc == 6)
 	{
@@ -72,7 +87,8 @@ int	main(int argc, char **argv)
 			free (input);
 			return (1);
 		}
-		print_details(input);
+		init(input);
+		//print_details(input);
 		free (input);
 	}
 	else

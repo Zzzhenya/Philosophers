@@ -8,6 +8,31 @@
 # include <string.h>
 # include <sys/time.h>
 
+# define EATING 1
+# define SLEEPING 2
+# define THINKING 3
+# define DEAD 4
+# define AVAILABLE 0
+
+typedef struct s_philo
+{
+	int				philo_id;
+	pthread_t		thread;
+	pthread_mutex_t mutex1;
+	pthread_mutex_t mutex2;
+	long long int		last_eat_time;
+	int 			eat_times;
+	int 			status;
+	int 			*fork_l;
+	int 			*fork_r;
+	int 	t_die;
+	int 	t_eat;
+	int 	t_sleep;
+	int 	min_eat;
+	int philos;
+	long long int start;
+} t_philo;
+
 typedef struct s_input
 {
 	int 	philos;
@@ -15,6 +40,8 @@ typedef struct s_input
 	int 	t_eat;
 	int 	t_sleep;
 	int 	min_eat;
+	int 	*forks_arr;
+	t_philo	*philo_arr;
 } t_input;
 
 /* main.c */
@@ -27,5 +54,8 @@ void	print_message(char *str, int fd);
 
 int parse(char **argv);
 int store(char **argv, int type, t_input *input);
+
+/* init.c */
+void init(t_input *input);
 
 #endif
