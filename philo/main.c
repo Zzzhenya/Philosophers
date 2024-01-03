@@ -51,8 +51,8 @@ void print_details(t_input *input)
 	{
 		printf("\nPhilo %d\n", i);
 		printf("Philo_id: %d\n", input->philo_arr[i].philo_id);
-		printf("Thread: %p\n", input->philo_arr[i].thread);
-		printf("Last_eat: %ld\n", input->philo_arr[i].last_eat_time);
+		printf("Thread: %ld\n", input->philo_arr[i].thread);
+		printf("Last_eat: %lld\n", input->philo_arr[i].last_eat_time);
 		//printf("Fork_l: @%p : %d\n", input->philo_arr[i].fork_l, *input->philo_arr[i].fork_l);
 		//printf("Fork_r: @%p : %d\n", input->philo_arr[i].fork_r, *input->philo_arr[i].fork_r);
 		i ++; 

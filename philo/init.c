@@ -54,6 +54,16 @@ void *routine(void *arg)
 
 	philo = (t_philo *)arg;
 	time = get_mili_time();
+	if (!(philo->philo_id % 2))
+	{
+		if (time < philo->last_eat_time + philo->t_die)
+		{
+			printf("%lld : Philo %d Eating\n",time, philo->philo_id); 
+			usleep(philo->t_eat * 1000);
+		}
+		time = get_mili_time();
+		philo->last_eat_time = time;
+	}
 	while (1)
 	{
 		time = get_mili_time();
