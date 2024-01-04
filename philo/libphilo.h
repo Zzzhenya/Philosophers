@@ -18,13 +18,11 @@ typedef struct s_philo
 {
 	int				philo_id;
 	pthread_t		thread;
-	pthread_mutex_t mutex1;
-	pthread_mutex_t mutex2;
 	long long int		last_eat_time;
 	int 			eat_times;
 	int 			status;
-	int 			*fork_l;
-	int 			*fork_r;
+	pthread_mutex_t 			*fork_l;
+	pthread_mutex_t 			*fork_r;
 	int 	t_die;
 	int 	t_eat;
 	int 	t_sleep;
@@ -40,7 +38,7 @@ typedef struct s_input
 	int 	t_eat;
 	int 	t_sleep;
 	int 	min_eat;
-	int 	*forks_arr;
+	pthread_mutex_t 	*mutex;
 	t_philo	*philo_arr;
 } t_input;
 

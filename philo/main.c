@@ -51,7 +51,7 @@ void print_details(t_input *input)
 	{
 		printf("\nPhilo %d\n", i);
 		printf("Philo_id: %d\n", input->philo_arr[i].philo_id);
-		printf("Thread: %ld\n", input->philo_arr[i].thread);
+		//printf("Thread: %ld\n", input->philo_arr[i].thread);
 		printf("Last_eat: %lld\n", input->philo_arr[i].last_eat_time);
 		//printf("Fork_l: @%p : %d\n", input->philo_arr[i].fork_l, *input->philo_arr[i].fork_l);
 		//printf("Fork_r: @%p : %d\n", input->philo_arr[i].fork_r, *input->philo_arr[i].fork_r);
@@ -61,7 +61,7 @@ void print_details(t_input *input)
 	printf("Forks\n");
 	while (i < input->philos)
 	{
-		printf("Fork %d: @%p : %d\n", i, &input->forks_arr[i], input->forks_arr[i]);
+		printf("Fork %d: @%p\n", i, &input->mutex[i]);
 		i ++;
 	}
 }
