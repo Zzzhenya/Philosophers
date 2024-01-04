@@ -45,6 +45,43 @@ void ft_sleep(size_t t)
 	usleep (t * 1000);
 }
 
+void pick_fork(t_philo *philo, char d)
+{
+	long long currtime;
+
+	currtime = get_mili_time();
+	if (d == 'l')
+	{
+		pthread_mutex_lock(philo->fork_l);
+			printf("philo %d picked l fork. : %lld\n", philo->philo_id , currtime - philo->start);
+	}
+	else
+	{
+		pthread_mutex_lock(philo->fork_r);
+			printf("philo %d picked r fork. : %lld\n", philo->philo_id ,currtime - philo->start);
+	}
+}
+
+void return_fork(t_philo *philo, char d)
+{
+	long long currtime;
+
+	currtime = get_mili_time();
+	if (d == 'l')
+	{
+		pthread_mutex_unlock(philo->fork_l);
+			printf("philo %d put down l fork. : %lld\n", philo->philo_id ,currtime - philo->start);
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->fork_r);
+			printf("philo %d put down r fork. : %lld\n", philo->philo_id ,currtime - philo->start);
+	}
+
+}
+
+/* if philo id is odd philo picks left fork first, else philo picks right fork */
+
 void *routine(void *arg)
 {
 	t_philo *philo;
@@ -58,35 +95,24 @@ void *routine(void *arg)
 	{
 		if (philo->philo_id % 2 != 0)
 		{
-			currtime = get_mili_time();
-			pthread_mutex_lock(philo->fork_l);
-				printf("philo %d picked l fork. : %lld\n", philo->philo_id ,currtime - philo->start);
-			pthread_mutex_lock(philo->fork_r);
-				printf("philo %d picked r fork. : %lld\n", philo->philo_id ,currtime - philo->start);
+			pick_fork(philo, 'l');
+			pick_fork(philo, 'r');
 			currtime = get_mili_time();
 			philo->last_eat_time = currtime;
 			ft_sleep(philo->t_eat);
-			currtime = get_mili_time();
-			pthread_mutex_unlock(philo->fork_l);
-				printf("philo %d put down l fork. : %lld\n", philo->philo_id ,currtime - philo->start);
-			pthread_mutex_unlock(philo->fork_r);
-				printf("philo %d put down r fork. : %lld\n", philo->philo_id ,currtime - philo->start);
+			return_fork(philo, 'l');
+			return_fork(philo, 'r');
 		}
 		else
 		{
-			currtime = get_mili_time();
-			pthread_mutex_lock(philo->fork_r);
-				printf("philo %d picked r fork. : %lld\n", philo->philo_id ,currtime - philo->start);
-			pthread_mutex_lock(philo->fork_l);
-				printf("philo %d picked l fork. : %lld\n", philo->philo_id ,currtime - philo->start);
+			pick_fork(philo, 'r');
+			pick_fork(philo, 'l');
 			currtime = get_mili_time();
 			philo->last_eat_time = currtime;
 			ft_sleep(philo->t_eat);
 			currtime = get_mili_time();
-			pthread_mutex_unlock(philo->fork_r);
-				printf("philo %d put down r fork. : %lld\n", philo->philo_id ,currtime - philo->start);
-			pthread_mutex_unlock(philo->fork_l);
-				printf("philo %d put down l fork. : %lld\n", philo->philo_id ,currtime - philo->start);
+			return_fork(philo, 'r');
+			return_fork(philo, 'l');
 		}
 	}
 	return ((void *)0);
