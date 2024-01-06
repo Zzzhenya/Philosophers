@@ -1,0 +1,1 @@
+# Modified version of Edsger Dijkstra's Dining philosophers problem
