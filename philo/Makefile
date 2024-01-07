@@ -4,7 +4,7 @@ NAME	= philo
 
 CFLAGS	= -Wall -Werror -Wextra -pthread
 
-#CFLAGS 	+= -g -fsanitize=thread 
+CFLAGS 	+= -g -fsanitize=thread 
 
 SRCS	= 	main.c parse_and_store.c \
 			print_message.c init.c

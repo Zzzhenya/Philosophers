@@ -106,10 +106,10 @@ void eat(t_philo *philo)
 		{
 			pick_fork(philo, 'l');
 			pick_fork(philo, 'r');
-			currtime = get_mili_time();
-			philo->last_eat_time = currtime;
 			print(philo, "is eating");
 			ft_sleep(philo->t_eat);
+			currtime = get_mili_time();
+			philo->last_eat_time = currtime;
 			return_fork(philo, 'l');
 			return_fork(philo, 'r');
 		}
@@ -117,11 +117,10 @@ void eat(t_philo *philo)
 		{
 			pick_fork(philo, 'r');
 			pick_fork(philo, 'l');
-			currtime = get_mili_time();
-			philo->last_eat_time = currtime;
 			print(philo, "is eating");
 			ft_sleep(philo->t_eat);
 			currtime = get_mili_time();
+			philo->last_eat_time = currtime;
 			return_fork(philo, 'r');
 			return_fork(philo, 'l');
 		}
@@ -208,6 +207,12 @@ void init_threads(t_input *input)
 		pthread_mutex_destroy(&input->mutex[i]);
 		if (ret > 0)
 		{
+			i = 0;
+			while (i < input->philos)
+			{
+				pthread_detach(input->philo_arr[i].thread);
+				i ++;
+			}
 			//free_all()
 			exit(1);
 		}
