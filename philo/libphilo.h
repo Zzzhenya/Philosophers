@@ -69,5 +69,12 @@ int store(char **argv, int type, t_input *input);
 
 /* init.c */
 void init(t_input *input);
+void ft_sleep(size_t t);
+void print(t_philo *philo, char *msg);
+long long get_mili_time(void);
+
+/* eat.c */
+
+void eat(t_philo *philo);
 
 #endif
