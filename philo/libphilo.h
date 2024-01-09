@@ -32,10 +32,9 @@ typedef struct s_philo
 	pthread_t		thread;
 	long long int		last_eat_time;
 	int 			eat_times;
-	int 			status;
 	pthread_mutex_t 			*fork_l;
 	pthread_mutex_t 			*fork_r;
-	pthread_mutex_t				*print;
+	pthread_mutex_t				print;
 	int 	t_die;
 	int 	t_eat;
 	int 	t_sleep;
@@ -51,7 +50,6 @@ typedef struct s_input
 	int 				t_eat;
 	int 				t_sleep;
 	int 				min_eat;
-	pthread_mutex_t		printer;
 	pthread_mutex_t 	*mutex;
 	t_philo				*philo_arr;
 } t_input;
