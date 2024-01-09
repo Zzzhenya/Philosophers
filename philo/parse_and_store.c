@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parse_and_store.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sde-silv <sde-silv@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/09 11:55:40 by sde-silv          #+#    #+#             */
+/*   Updated: 2024/01/09 11:55:42 by sde-silv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libphilo.h"
 
 static int	ft_atoi(const char *nptr)
@@ -25,7 +37,7 @@ static int	ft_atoi(const char *nptr)
 
 int	store(char **argv, int type, t_input *input)
 {
-	int error;
+	int	error;
 
 	error = 0;
 	input->philos = ft_atoi(argv[1]);
@@ -47,12 +59,11 @@ int	store(char **argv, int type, t_input *input)
 	if (error > 0)
 		return (0);
 	return (1);
-
 }
 
-static int check_pos_num(char *str)
+static int	check_pos_num(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '+')
@@ -66,9 +77,9 @@ static int check_pos_num(char *str)
 	return (1);
 }
 
-int parse(char **argv)
+int	parse(char **argv)
 {
-	int i;
+	int	i;
 
 	i = 1;
 	while (argv[i])

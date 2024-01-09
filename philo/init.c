@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sde-silv <sde-silv@student.42berlin.d      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/01/09 11:55:25 by sde-silv          #+#    #+#             */
+/*   Updated: 2024/01/09 11:55:27 by sde-silv         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libphilo.h"
 
 long long get_mili_time(void)
@@ -221,7 +233,7 @@ void init_threads(t_input *input)
 	pthread_mutex_destroy(&input->printer);
 }
 
-void init(t_input *input)
+void	init(t_input *input)
 {
 	input->mutex = malloc(sizeof(pthread_mutex_t) * input->philos);
 	input->philo_arr = malloc(sizeof(t_philo) * input->philos);
