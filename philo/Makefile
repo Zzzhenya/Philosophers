@@ -16,11 +16,12 @@ NAME	= philo
 
 CFLAGS	= -Wall -Werror -Wextra -pthread
 
-CFLAGS 	+= -g -fsanitize=thread 
+CFLAGS 	+= -g #-fsanitize=thread 
 
-SRCS	= 	main.c parse_and_store.c \
-			print_message.c init.c \
-			eat.c debug.c
+SRCS	= 	main.c input_check.c \
+			print_message.c init_struct.c \
+			init_dining.c get_milli_time.c \
+			mtx_actions.c 
 
 RM		= rm -rf
 

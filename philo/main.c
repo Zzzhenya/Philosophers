@@ -12,23 +12,27 @@
 
 #include "libphilo.h"
 
+
 int	main(int argc, char **argv)
 {
-	t_input	input;
+	t_env				env;
+	t_philo 			philos[PHILO_MAX];
+	pthread_mutex_t 	forks[PHILO_MAX];
 
-	if (argc == 5 || argc == 6)
+	if (argc != 5 && argc != 6)
 	{
-		if (!parse(argv))
-			return (1);
-		if (!store(argv, argc, &input))
-		{
-			print_message("Values should be larger than 0.", 2);
-			return (1);
-		}
-		init(&input);
-		//print_details(input);
+		print_error("Usage: #philo t_die t_eat t_sleep [min_eat_times]");
+		return (1);
 	}
-	else
-		write(1, "Usage: #philo t_die t_eat t_sleep [min_eat_times]\n", 50);
+	if (bad_input(argv))
+		return (1);
+	env.ph = philos;
+	env.forks = forks;
+	init_struct(&env, argc, argv);
+	if (init_mtx(&env) != 0)
+		return (2);
+	if (init_dining(&env) != 0)
+		return (3);
+	//print_details(input);
 	return (0);
 }

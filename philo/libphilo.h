@@ -20,63 +20,77 @@
 # include <string.h>
 # include <sys/time.h>
 
-# define EATING 1
+# define PHILO_MAX 201
+/*# define EATING 1
 # define SLEEPING 2
 # define THINKING 3
 # define DEAD 4
-# define AVAILABLE 0
+# define AVAILABLE 0*/
 
 typedef struct s_philo
 {
-	int				philo_id;
-	pthread_t		thread;
-	long long int		last_eat_time;
-	int 			eat_times;
-	pthread_mutex_t 			*fork_l;
-	pthread_mutex_t 			*fork_r;
-	pthread_mutex_t				print;
-	int 	t_die;
-	int 	t_eat;
-	int 	t_sleep;
-	int 	min_eat;
-	int philos;
-	long long int start;
+	pthread_t 			thread;
+	int 				id;
+	int 				eat_time;
+	int 				sleep_time;
+	int 				life_time;
+	int 				min_eat;
+	long long			start;
+	long long 			last_eat_time;
+	int 				*dead;
+	int 				*all_eat;
+	pthread_mutex_t		*lfork;
+	pthread_mutex_t		*rfork;
+	pthread_mutex_t		*mtx_print;
+	pthread_mutex_t		*mtx_dead;
+	pthread_mutex_t		*mtx_ecount;
+	
 } t_philo;
 
-typedef struct s_input
+typedef struct s_env
 {
-	int 				philos;
-	int 				t_die;
-	int 				t_eat;
-	int 				t_sleep;
+	int 				ph_num;
+	int 				dead;
+	int 				eat_time;
+	int 				sleep_time;
+	int 				life_time;
 	int 				min_eat;
-	pthread_mutex_t 	*mutex;
-	t_philo				*philo_arr;
-} t_input;
+	int 				all_eat;
+	pthread_mutex_t		*forks;
+	pthread_mutex_t		mtx_print;
+	pthread_mutex_t		mtx_dead;
+	pthread_mutex_t		mtx_ecount;
+	t_philo				*ph;
+} t_env;
 
 /* main.c */
 
+/* input_check.c */
+
+int			bad_input(char **argv);
+int			ft_atoi(const char *nptr);
+
+/* init_struct.c */
+
+void		init_struct(t_env *env, int argc, char **argv);
+
+/* init_dining.c */
+
+int 		init_dining(t_env *env);
+void 		*routine(void *arg);
+void 		print(t_philo *philo, char *msg);
+
+/* mtx_actions.c */
+
+int			init_mtx(t_env *env);
+int 		destroy_all(t_env *env, int type);
+
 /* print_message.c */
 
-void	print_message(char *str, int fd);
+void		print_error(char *str);
 
-/* parse_and_store.c */
+/* get_milli_time.c */
 
-int parse(char **argv);
-int store(char **argv, int type, t_input *input);
-
-/* init.c */
-void init(t_input *input);
-void ft_sleep(size_t t);
-void print(t_philo *philo, char *msg);
-long long get_mili_time(void);
-
-/* eat.c */
-
-void eat(t_philo *philo);
-
-/* debug.c */
-
-void	print_details(t_input *input);
+long long 	get_milli_time(void);
 
 #endif

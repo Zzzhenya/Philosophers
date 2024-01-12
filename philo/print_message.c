@@ -24,15 +24,15 @@ int	ft_strlen(char *str)
 	return (len);
 }
 
-void	print_message(char *str, int fd)
+void	print_error(char *str)
 {
 	int	len;
 
 	len = ft_strlen(str);
 	if (len > 0)
 	{
-		write (fd, str, len);
-		write (fd, "\n", 1);
+		write (2, str, len);
+		write (2, "\n", 1);
 	}
 	else
 		write (2, "Error\n", 6);
