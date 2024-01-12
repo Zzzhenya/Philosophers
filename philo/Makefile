@@ -20,7 +20,7 @@ CFLAGS 	+= -g -fsanitize=thread
 
 SRCS	= 	main.c parse_and_store.c \
 			print_message.c init.c \
-			eat.c
+			eat.c debug.c
 
 RM		= rm -rf
 

@@ -75,4 +75,8 @@ long long get_mili_time(void);
 
 void eat(t_philo *philo);
 
+/* debug.c */
+
+void	print_details(t_input *input);
+
 #endif
