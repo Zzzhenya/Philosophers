@@ -30,6 +30,7 @@
 typedef struct s_philo
 {
 	pthread_t 			thread;
+	int 				ph_num;
 	int 				id;
 	int 				eat_time;
 	int 				sleep_time;

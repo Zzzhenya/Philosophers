@@ -19,10 +19,82 @@ void print(t_philo *philo, char *msg)
 
 	pthread_mutex_lock(philo->mtx_print);
 	currtime = get_milli_time();
-	printf("%lld %d %s\n", currtime - philo->start,  philo->id, msg);
+	//printf("%lld %d %s\n", currtime - philo->start,  philo->id, msg);
+	printf("%lld %d %s\n", currtime,  philo->id, msg);
 	pthread_mutex_unlock(philo->mtx_print);
 }
 
+void pick_fork(t_philo *philo, char d)
+{
+	if (d == 'l')
+	{
+		pthread_mutex_lock(philo->lfork);
+		print(philo, "has taken a fork");
+	}
+	else
+	{
+		pthread_mutex_lock(philo->rfork);
+		print(philo, "has taken a fork");
+	}
+}
+
+void return_fork(t_philo *philo, char d)
+{
+	if (d == 'l')
+	{
+		pthread_mutex_unlock(philo->lfork);
+		//print(philo, "put down a fork");
+	}
+	else
+	{
+		pthread_mutex_unlock(philo->rfork);
+		//print(philo, "put down a fork");
+	}
+
+}
+
+void philo_eat(t_philo *philo)
+{
+	long long currtime;
+
+	//if (philo->t_die > philo->t_eat + philo->t_sleep)
+	if (philo->id % 2)
+	{
+
+		pick_fork(philo, 'l');
+		pick_fork(philo, 'r');
+		print(philo, "is eating");
+		usleep(philo->eat_time * 1000);
+		currtime = get_milli_time();
+		philo->last_eat_time = currtime;
+		return_fork(philo, 'l');
+		return_fork(philo, 'r');
+	}
+	else if (philo->ph_num > 2)
+	{
+		pick_fork(philo, 'r');
+		pick_fork(philo, 'l');
+		print(philo, "is eating");
+		usleep(philo->eat_time * 1000);
+		return_fork(philo, 'r');
+		return_fork(philo, 'l');
+		currtime = get_milli_time();
+		philo->last_eat_time = currtime;
+	}
+	else
+	{
+		pick_fork(philo, 'r');
+		pick_fork(philo, 'l');
+		print(philo, "is eating");
+		usleep(philo->eat_time * 1000);
+		return_fork(philo, 'r');
+		return_fork(philo, 'l');
+		currtime = get_milli_time();
+		philo->last_eat_time = currtime;
+	}
+
+}
+/*
 void philo_eat(t_philo *philo)
 {
 	long long currtime;
@@ -31,16 +103,20 @@ void philo_eat(t_philo *philo)
 	usleep(philo->eat_time * 1000);
 	currtime = get_milli_time();
 	philo->last_eat_time = currtime;
-}
+}*/
 
 void philo_sleep(t_philo *philo)
 {
-	print(philo, "is sleeping");
-	usleep(philo->sleep_time * 1000);
+	if (is_alive(philo))
+	{
+		print(philo, "is sleeping");
+		usleep(philo->sleep_time * 1000);
+	}
 }
 
 void philo_think(t_philo *philo)
 {
+	if (is_alive(philo))
 	print(philo, "is thinking");
 }
 
@@ -59,6 +135,7 @@ void *routine(void *arg)
 			print(philo, "is dead");
 			*philo->dead = 1;
 			pthread_mutex_unlock(philo->mtx_dead);
+			break;
 		}
 		philo_eat(philo);
 		philo_sleep(philo);

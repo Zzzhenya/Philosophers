@@ -34,6 +34,7 @@ void	setup_philos(t_env *env)
 	while (i < env->ph_num)
 	{
 		env->ph[i].id = i + 1;
+		env->ph[i].ph_num = env->ph_num;
 		env->ph[i].eat_time = env->eat_time;
 		env->ph[i].sleep_time = env->sleep_time;
 		env->ph[i].life_time = env->life_time;
