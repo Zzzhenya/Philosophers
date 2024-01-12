@@ -16,9 +16,9 @@ void	setup_env(t_env *env, int argc, char **argv)
 {
 	env->ph_num	= ft_atoi(argv[1]);
 	env->dead = 0;
-	env->eat_time = ft_atoi(argv[2]);
-	env->sleep_time = ft_atoi(argv[3]);
-	env->life_time = ft_atoi(argv[4]);
+	env->eat_time = ft_atoi(argv[3]);
+	env->sleep_time = ft_atoi(argv[4]);
+	env->life_time = ft_atoi(argv[2]);
 	if (argc == 6)
 		env->min_eat = ft_atoi(argv[5]);
 	else
