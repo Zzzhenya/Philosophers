@@ -79,13 +79,13 @@ void    *monitor(void *arg)
             {
                 printf("meal count %lld completed\n", env->ph[i].last_eat_time);
                 pthread_mutex_unlock(&env->ph[i].mtx_last_meal);
-                break;
+                return (arg);
             }
             pthread_mutex_unlock(&env->ph[i].mtx_last_meal);
             i ++;
         }
     }
-    return ((void *)1);
+    return (arg);
 }
 
 int all_alive(t_philo *philo)
@@ -140,8 +140,8 @@ void init_threads(t_env *env)
         i ++;
     }
     pthread_join(env->monitor, (void **)&ret);
-    if (ret)
-        return ;
+    //if (ret)
+    //    return ;
     i = 0;
     while (i < env->ph_num)
     {
