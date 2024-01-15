@@ -45,6 +45,7 @@ typedef struct s_philo
 	pthread_mutex_t		*mtx_print;
 	pthread_mutex_t		*mtx_dead;
 	pthread_mutex_t		*mtx_ecount;
+	pthread_mutex_t		mtx_last_meal;
 	
 } t_philo;
 
@@ -57,6 +58,7 @@ typedef struct s_env
 	int 				life_time;
 	int 				min_eat;
 	int 				all_eat;
+	pthread_t 			checker;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		mtx_print;
 	pthread_mutex_t		mtx_dead;

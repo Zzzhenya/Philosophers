@@ -14,6 +14,11 @@ int destroy_forks(t_env *env)
 			print_error ("Fork mutex destroy error.");
 			ret ++;
 		}
+		if (pthread_mutex_destroy(&env->ph[i].mtx_last_meal) != 0)
+		{
+			print_error ("Last meal mutex destroy error.");
+			ret += 2;
+		}
 		i ++;
 	}
 	return (ret);
@@ -65,6 +70,11 @@ int init_forkmtx(t_env *env)
 		{
 			print_error("Fork mutex init error.");
 			return (i + 1);
+		}
+		if (pthread_mutex_init(&env->ph[i].mtx_last_meal, NULL) != 0)
+		{
+			print_error("last meal mutex init error.");
+			return ( (2 * i) + 2);
 		}
 		i ++;
 	}
