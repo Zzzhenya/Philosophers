@@ -14,9 +14,9 @@ CC		= cc
 
 NAME	= philo
 
-CFLAGS	= -Wall -Werror -Wextra -pthread
+CFLAGS	= -Wall -Werror -Wextra -pthread -g -fsanitize=thread
 
-CFLAGS 	+= -g #-fsanitize=thread 
+#CFLAGS 	+=  
 
 SRCS	= 	main.c input_check.c \
 			print_message.c init_struct.c \
