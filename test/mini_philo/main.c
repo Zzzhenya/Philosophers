@@ -77,7 +77,6 @@ void    *monitor(void *arg)
             pthread_mutex_lock(&env->ph[i].mtx_last_meal);
             if (env->ph[i].last_eat_time == 10)
             {
-                printf("meal count %lld completed\n", env->ph[i].last_eat_time);
                 pthread_mutex_unlock(&env->ph[i].mtx_last_meal);
                 return (arg);
             }
@@ -103,6 +102,19 @@ int all_alive(t_philo *philo)
     }
 }
 
+int print(t_philo *philo)
+{
+    if (all_alive(philo))
+    {
+        pthread_mutex_lock(philo->mtx_print);
+        printf("%d: %lld  Hello World\n",philo->id, philo->last_eat_time);
+        pthread_mutex_unlock(philo->mtx_print);
+        return (1);
+    }
+    else
+        return (0);
+}
+
 void    *routine(void *arg)
 {
     t_philo *philo;
@@ -111,17 +123,17 @@ void    *routine(void *arg)
     while (1)
     {
         pthread_mutex_lock(&philo->mtx_last_meal);
-        if (all_alive(philo))
-            printf("%d: %lld  Hello World\n",philo->id, philo->last_eat_time);
-        else
-            break;
-        philo->last_eat_time ++;
         if (philo->last_eat_time == 10)
         {
             pthread_mutex_lock(philo->mtx_dead);
             *philo->dead = 1;
-            pthread_mutex_unlock(philo->mtx_dead); 
+            pthread_mutex_unlock(philo->mtx_dead);
+            pthread_mutex_unlock(&philo->mtx_last_meal);
+            return ((void *)1); 
         }
+        if (!print(philo))
+            break;
+        philo->last_eat_time ++;
         pthread_mutex_unlock(&philo->mtx_last_meal);
         sleep(1);
     }
@@ -131,7 +143,6 @@ void    *routine(void *arg)
 void init_threads(t_env *env)
 {
     int i = 0;
-    int ret;
 
     pthread_create(&env->monitor, NULL, (void *)&monitor, env);
     while (i < env->ph_num)
@@ -139,9 +150,7 @@ void init_threads(t_env *env)
         pthread_create(&env->ph[i].thread, NULL, (void *)&routine, &env->ph[i]);
         i ++;
     }
-    pthread_join(env->monitor, (void **)&ret);
-    //if (ret)
-    //    return ;
+    pthread_join(env->monitor, NULL);
     i = 0;
     while (i < env->ph_num)
     {
