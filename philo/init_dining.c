@@ -1,19 +1,16 @@
 #include "libphilo.h"
 
-int is_alive(t_philo *philo)
+int	is_alive(t_philo *philo)
 {
-	int status = 0;
-	//long long currtime;
-
 	pthread_mutex_lock(philo->mtx_dead);
-	status = *philo->dead;
-	//currtime = get_milli_time();
-	pthread_mutex_unlock(philo->mtx_dead);
-	if (status == 0)//&& currtime < philo->last_eat_time + philo->life_time)
+	if (*philo->dead == 0)
+	{
+		pthread_mutex_unlock(philo->mtx_dead);
 		return (1);
+	}
+	pthread_mutex_unlock(philo->mtx_dead);
 	return (0);
 }
-
 
 void print(t_philo *philo, char *msg)
 {
