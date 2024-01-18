@@ -20,7 +20,8 @@
 # include <string.h>
 # include <sys/time.h>
 
-# define PHILO_MAX 201
+# define PHILO_MAX 200
+# define USLEEP_MAX 1000000
 /*# define EATING 1
 # define SLEEPING 2
 # define THINKING 3
@@ -58,7 +59,6 @@ typedef struct s_env
 	int 				life_time;
 	int 				min_eat;
 	int 				all_eat;
-	pthread_t 			checker;
 	pthread_mutex_t		*forks;
 	pthread_mutex_t		mtx_print;
 	pthread_mutex_t		mtx_dead;

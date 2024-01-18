@@ -61,7 +61,7 @@ int not_in_range(char *str, int i)
 		print_error("Philos and times should be larger than 0.");
 		return (1);
 	}
-	else if ((i == 3 || i == 4)  && ret * 1000 > 1000000)
+	else if ((i == 3 || i == 4)  && ret * 1000 > USLEEP_MAX)
 	{
 		// Check whether max is 1000000 or unsigned int max in linux
 		print_error("Eat or sleep might be of usleep range.");
