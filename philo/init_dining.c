@@ -95,16 +95,6 @@ void philo_eat(t_philo *philo)
 
 	}
 }
-/*
-void philo_eat(t_philo *philo)
-{
-	long long currtime;
-
-	print(philo, "is eating");
-	usleep(philo->eat_time * 1000);
-	currtime = get_milli_time();
-	philo->last_eat_time = currtime;
-}*/
 
 void philo_sleep(t_philo *philo)
 {
@@ -120,28 +110,14 @@ void philo_think(t_philo *philo)
 void *routine(void *arg)
 {
 	t_philo *philo;
-	//long long currtime;
 
 	philo = (t_philo *)arg;
 	philo_think(philo);
-	while (is_alive(philo))
+	while (1)
 	{
-		/*
-		currtime = get_milli_time();
-		if (currtime >= philo->last_eat_time + philo->life_time)
-		{
-			print(philo, "is dead");
-			pthread_mutex_lock(philo->mtx_dead);
-			*philo->dead = 1;
-			pthread_mutex_unlock(philo->mtx_dead);
-			break;
-		}*/
-		if (philo->life_time > philo->eat_time + philo->sleep_time)// && philo->ph_num > 1)
-		{
-			philo_eat(philo);
-			philo_sleep(philo);
-			philo_think(philo);
-		}
+		philo_eat(philo);
+		philo_sleep(philo);
+		philo_think(philo);
 	}
 	return ((void *)0);
 }
@@ -149,30 +125,10 @@ void *routine(void *arg)
 void *checker(void *arg)
 {
 	t_env *env;
-	long long currtime;
-	long long last_eat;
-	int i = 0;
 
 	env = (t_env *)arg;
 	while (1)
 	{
-		i = 0;
-		while (i < env->ph_num)
-		{
-			currtime = get_milli_time();
-			pthread_mutex_lock(&env->ph[i].mtx_last_meal);
-			last_eat = env->ph[i].last_eat_time;
-			pthread_mutex_unlock(&env->ph[i].mtx_last_meal);
-			if (currtime >= last_eat + env->life_time)
-			{
-				//print(&env->ph[i], "is dead");
-				pthread_mutex_lock(env->ph[i].mtx_dead);
-				*env->ph[i].dead = 1;
-				pthread_mutex_unlock(env->ph[i].mtx_dead);
-				break;
-			}
-			i ++;
-		}
 
 	}
 	return ((void *)0);
