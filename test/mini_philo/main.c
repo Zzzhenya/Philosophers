@@ -102,12 +102,25 @@ int all_alive(t_philo *philo)
     }
 }
 
-int print(t_philo *philo)
+long long currtime()
 {
+    long long time;
+    struct timeval tv;
+
+    gettimeofday(&tv, NULL);
+    time = tv.tv_sec * 1000 + tv.tv_usec / 1000;
+    return (time);
+}
+
+int print(t_philo *philo, char *str)
+{
+    long long time;
+
     if (all_alive(philo))
     {
         pthread_mutex_lock(philo->mtx_print);
-        printf("%d: %lld  Hello World\n",philo->id, philo->last_eat_time);
+        time = currtime();
+        printf("%lld: Philo %d is %s, %lld\n",time, philo->id, str, philo->last_eat_time + 1);
         pthread_mutex_unlock(philo->mtx_print);
         return (1);
     }
@@ -131,11 +144,11 @@ void    *routine(void *arg)
             pthread_mutex_unlock(&philo->mtx_last_meal);
             return ((void *)1); 
         }
-        if (!print(philo))
+        if (!print(philo, "eating"))
             break;
         philo->last_eat_time ++;
+        usleep(200000);
         pthread_mutex_unlock(&philo->mtx_last_meal);
-        sleep(1);
     }
     return ((void *)1);
 }
@@ -179,7 +192,7 @@ int main (void)
     pthread_mutex_t     mtx_arr[PHILO_MAX];
     t_env               env;
 
-    setup_env(4, 410, 200, 100, &env);
+    setup_env(6, 310, 200, 100, &env);
     env.ph = philo_arr;
     env.forks = mtx_arr;
     setup_philos(&env);
