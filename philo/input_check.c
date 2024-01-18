@@ -63,7 +63,8 @@ int not_in_range(char *str, int i)
 	}
 	else if ((i == 3 || i == 4)  && ret * 1000 > 1000000)
 	{
-		print_error("Eat and sleep out of usleep range.");
+		// Check whether max is 1000000 or unsigned int max in linux
+		print_error("Eat or sleep might be of usleep range.");
 		return (2);
 	}
 	else if (i == 1 && ret > 200)
