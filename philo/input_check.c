@@ -51,13 +51,26 @@ static int	not_int(char *str)
 	return (0);
 }
 
-int less_than_one(char *str)
+int not_in_range(char *str, int i)
 {
 	int ret;
 
 	ret = ft_atoi(str);
 	if (ret <= 0)
+	{
+		print_error("Philos and times should be larger than 0.");
 		return (1);
+	}
+	else if ((i == 3 || i == 4)  && ret * 1000 > 1000000)
+	{
+		print_error("Eat and sleep out of usleep range.");
+		return (2);
+	}
+	else if (i == 1 && ret > 200)
+	{
+		print_error("Maximum number of 200 Philosophers.");
+		return (3);
+	}
 	else
 		return (0);
 }
@@ -65,6 +78,7 @@ int less_than_one(char *str)
 int	bad_input(char **argv)
 {
 	int	i;
+	int val;
 
 	i = 1;
 	while (argv[i])
@@ -74,19 +88,9 @@ int	bad_input(char **argv)
 			print_error("Values should be positive integers.");
 			return (1);
 		}
-		if (less_than_one(argv[i]))
-		{
-			print_error("Philos and times should be larger than 0.");
+		val = not_in_range(argv[i], i);
+		if (val > 0)
 			return (1);
-		}
-		if (i == 0)
-		{
-			if (ft_atoi(argv[i]) > 200)
-			{
-				print_error("Maximum number of 200 Philosophers.");
-				return (1);
-			}
-		}
 		i ++;
 	}
 	return (0);
