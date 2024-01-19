@@ -66,8 +66,6 @@ void update_meal_time(t_philo *philo)
 
 void philo_eat(t_philo *philo)
 {
-	
-
 	//if (philo->t_die > philo->t_eat + philo->t_sleep)
 	if (!(philo->id % 2))
 	{
@@ -89,7 +87,6 @@ void philo_eat(t_philo *philo)
 		usleep(philo->eat_time * 1000);
 		return_fork(philo, 'r');
 		return_fork(philo, 'l');
-
 	}
 }
 
@@ -121,12 +118,29 @@ void *routine(void *arg)
 
 void *checker(void *arg)
 {
-	t_env *env;
+	t_env	*env;
+	int		i;
+	long long time;
 
 	env = (t_env *)arg;
 	while (1)
 	{
-
+		i = 0;
+		while (i < env->ph_num)
+		{
+			pthread_mutex_lock(&env->ph[i].mtx_last_meal);
+			time = get_milli_time();
+			if (time >= env->ph[i].last_eat_time + env->life_time)
+			{
+				pthread_mutex_lock(&env->mtx_dead);
+				env->dead = 1;
+				pthread_mutex_unlock(&env->mtx_dead);
+				pthread_mutex_unlock(&env->ph[i].mtx_last_meal);
+				return ((void *)1);
+			}
+			pthread_mutex_unlock(&env->ph[i].mtx_last_meal);
+			i ++;
+		}
 	}
 	return ((void *)0);
 }
@@ -135,12 +149,13 @@ int init_dining(t_env *env)
 {
 	int 		i;
 	long long	time;
+	pthread_t	monitor;
 
 	i = 0;
 	time = get_milli_time();
 	if (time <= 0)
 		return (1);
-	pthread_create(&env->checker, NULL, &checker, env);
+	pthread_create(&monitor, NULL, &checker, env);
 	while (i < env->ph_num)
 	{
 		env->ph[i].start = time;
@@ -152,7 +167,7 @@ int init_dining(t_env *env)
 		}
 		i ++;
 	}
-	pthread_join(env->checker, NULL);
+	pthread_join(monitor, NULL);
 	i = 0;
 	while (i < env->ph_num)
 	{
