@@ -22,11 +22,6 @@
 
 # define PHILO_MAX 200
 # define USLEEP_MAX 1000000
-/*# define EATING 1
-# define SLEEPING 2
-# define THINKING 3
-# define DEAD 4
-# define AVAILABLE 0*/
 
 typedef struct s_philo
 {
@@ -46,7 +41,6 @@ typedef struct s_philo
 	pthread_mutex_t		*mtx_print;
 	pthread_mutex_t		*mtx_dead;
 	pthread_mutex_t		mtx_last_eat;
-	
 } t_philo;
 
 typedef struct s_env

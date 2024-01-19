@@ -12,12 +12,39 @@
 
 #include "libphilo.h"
 
+void clean_allocs(t_env *env)
+{
+	free (env->ph);
+	env->ph = NULL;
+	free (env->forks);
+	env->forks = NULL;
+	free (env->mtx_forks);
+	env->mtx_forks = NULL;
+}
+
+int	allocate_memory(t_env *env)
+{
+	env->ph = malloc (sizeof(t_philo) * env->ph_num);
+	if (!env->ph)
+		return (1);
+	env->forks = malloc (sizeof(int) * env->ph_num);
+	if (!env->forks)
+	{
+		free (env->ph);
+		return (2);
+	}
+	env->mtx_forks = malloc (sizeof(pthread_mutex_t) * env->ph_num);
+	if (!env->mtx_forks)
+	{
+		free (env->ph);
+		free (env->forks);
+		return (3);
+	}
+}
 
 int	main(int argc, char **argv)
 {
 	t_env				env;
-	t_philo 			philos[PHILO_MAX];
-	pthread_mutex_t 	forks[PHILO_MAX];
 
 	if (argc != 5 && argc != 6)
 	{
@@ -26,13 +53,17 @@ int	main(int argc, char **argv)
 	}
 	if (bad_input(argv))
 		return (1);
-	env.ph = philos;
-	env.forks = forks;
+	if (allocate_memory(&env) != 0)
+	{
+		print_error("malloc failed.");
+		return (2);
+	}
 	init_struct(&env, argc, argv);
 	if (init_mtx(&env) != 0)
-		return (2);
-	if (init_dining(&env) != 0)
 		return (3);
+	if (init_dining(&env) != 0)
+		return (4);
 	//print_details(input);
+	clean_allocs(&env);
 	return (0);
 }
