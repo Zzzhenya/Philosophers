@@ -33,37 +33,38 @@ typedef struct s_philo
 	pthread_t 			thread;
 	int 				ph_num;
 	int 				id;
-	int 				eat_time;
-	int 				sleep_time;
-	int 				life_time;
-	int 				min_eat;
-	long long			start;
+	int 				eat_len;
+	int 				sleep_len;
+	int 				life_len;
+	int 				eat_count;
 	long long 			last_eat_time;
 	int 				*dead;
-	int 				*all_eat;
-	pthread_mutex_t		*lfork;
-	pthread_mutex_t		*rfork;
+	int					*ptr_lfork;
+	int 				*ptr_rfork;
+	pthread_mutex_t		*ptr_mtx_lfork;
+	pthread_mutex_t		*ptr_mtx_rfork;
 	pthread_mutex_t		*mtx_print;
 	pthread_mutex_t		*mtx_dead;
-	pthread_mutex_t		*mtx_ecount;
-	pthread_mutex_t		mtx_last_meal;
+	pthread_mutex_t		mtx_last_eat;
 	
 } t_philo;
 
 typedef struct s_env
 {
 	int 				ph_num;
+	int 				eat_len;
+	int 				sleep_len;
+	int 				life_len;
+	int 				eat_count;
+	int 				eat_philos;
 	int 				dead;
-	int 				eat_time;
-	int 				sleep_time;
-	int 				life_time;
-	int 				min_eat;
-	int 				all_eat;
-	pthread_mutex_t		*forks;
+	pthread_t 			monitor;
+	pthread_mutex_t		*mtx_forks;
+	pthread_mutex_t		mtx_eat_philos;
 	pthread_mutex_t		mtx_print;
 	pthread_mutex_t		mtx_dead;
-	pthread_mutex_t		mtx_ecount;
 	t_philo				*ph;
+	int					*forks;
 } t_env;
 
 /* main.c */
