@@ -12,14 +12,23 @@
 
 #include "libphilo.h"
 
-void clean_allocs(t_env *env)
+int clean_allocs(t_env *env, int l)
 {
 	free (env->ph);
 	env->ph = NULL;
+	if (l == 2)
+		return (2);
 	free (env->forks);
 	env->forks = NULL;
+	if (l == 3)
+		return (3);
 	free (env->mtx_forks);
 	env->mtx_forks = NULL;
+	if (l == 4)
+		return (4);
+	free (env->status);
+	env->status = NULL;
+	return (0);
 }
 
 int	allocate_memory(t_env *env)
@@ -29,17 +38,14 @@ int	allocate_memory(t_env *env)
 		return (1);
 	env->forks = malloc (sizeof(int) * env->ph_num);
 	if (!env->forks)
-	{
-		free (env->ph);
-		return (2);
-	}
+		return(clean_allocs(env, 2));
 	env->mtx_forks = malloc (sizeof(pthread_mutex_t) * env->ph_num);
 	if (!env->mtx_forks)
-	{
-		free (env->ph);
-		free (env->forks);
-		return (3);
-	}
+		return (clean_allocs(env, 3));
+	env->status = malloc(sizeof(int) * env->ph_num);
+	if (!status)
+		return (clean_allocs(env, 4));
+	return (0);
 }
 
 int	main(int argc, char **argv)

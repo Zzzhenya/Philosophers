@@ -33,7 +33,7 @@ typedef struct s_philo
 	int 				life_len;
 	int 				eat_count;
 	long long 			last_eat_time;
-	int 				*dead;
+	int 				*status;
 	int					*ptr_lfork;
 	int 				*ptr_rfork;
 	pthread_mutex_t		*ptr_mtx_lfork;
@@ -59,6 +59,7 @@ typedef struct s_env
 	pthread_mutex_t		mtx_dead;
 	t_philo				*ph;
 	int					*forks;
+	int 				*status;
 } t_env;
 
 /* main.c */
