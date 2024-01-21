@@ -39,7 +39,7 @@ typedef struct s_philo
 	pthread_mutex_t		*ptr_mtx_lfork;
 	pthread_mutex_t		*ptr_mtx_rfork;
 	pthread_mutex_t		*mtx_print;
-	pthread_mutex_t		*mtx_dead;
+	pthread_mutex_t		mtx_status;
 	pthread_mutex_t		mtx_last_eat;
 } t_philo;
 
@@ -50,16 +50,16 @@ typedef struct s_env
 	int 				sleep_len;
 	int 				life_len;
 	int 				eat_count;
-	int 				eat_philos;
+	int 				eat_philo_count;
 	int 				dead;
-	pthread_t 			monitor;
+	int					*forks;
+	int 				*status;
+	t_philo				*ph;
 	pthread_mutex_t		*mtx_forks;
+	pthread_t 			monitor;
 	pthread_mutex_t		mtx_eat_philos;
 	pthread_mutex_t		mtx_print;
 	pthread_mutex_t		mtx_dead;
-	t_philo				*ph;
-	int					*forks;
-	int 				*status;
 } t_env;
 
 /* main.c */
@@ -71,6 +71,7 @@ int			ft_atoi(const char *nptr);
 
 /* init_struct.c */
 
+void		setup_env(t_env *env, int argc, char **argv);
 void		init_struct(t_env *env, int argc, char **argv);
 
 /* init_dining.c */

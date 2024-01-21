@@ -71,7 +71,7 @@ void	setup_forks(t_env *env)
 
 void	init_struct(t_env *env, int argc, char **argv)
 {
-	setup_env(env, argc, argv);
+	//setup_env(env, argc, argv);
 	setup_philos(env);
 	setup_forks(env);
 }

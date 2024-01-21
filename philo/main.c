@@ -41,7 +41,7 @@ int	allocate_memory(t_env *env)
 		return(clean_allocs(env, 2));
 	env->mtx_forks = malloc (sizeof(pthread_mutex_t) * env->ph_num);
 	if (!env->mtx_forks)
-		return (clean_allocs(env, 3));
+		return (clean_allocs(en`v, 3));
 	env->status = malloc(sizeof(int) * env->ph_num);
 	if (!status)
 		return (clean_allocs(env, 4));
@@ -54,11 +54,12 @@ int	main(int argc, char **argv)
 
 	if (argc != 5 && argc != 6)
 	{
-		print_error("Usage: #philo t_die t_eat t_sleep [min_eat_times]");
+		print_error("Usage(ms): #philo die eat sleep [eat_count]");
 		return (1);
 	}
 	if (bad_input(argv))
 		return (1);
+	setup_env(env, argc, argv);
 	if (allocate_memory(&env) != 0)
 	{
 		print_error("malloc failed.");
