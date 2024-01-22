@@ -81,7 +81,6 @@ void philo_sleep(t_philo *philo)
 void philo_think(t_philo *philo)
 {
 	print(philo, "is thinking");
-	custom_sleep(1);
 }
 
 void *routine(void *arg)
@@ -103,6 +102,7 @@ void *routine(void *arg)
 		}
 		philo_sleep(philo);
 		philo_think(philo);
+		custom_sleep(1);
 	}
 	return ((void *)0);
 }
