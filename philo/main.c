@@ -59,7 +59,7 @@ int	main(int argc, char **argv)
 	if (argc != 5 && argc != 6)
 	{
 		print_error("Usage(ms): #philo die eat sleep [eat_count]");
-		return (1);
+		return (5);
 	}
 	if (bad_input(argv))
 		return (1);
@@ -76,9 +76,11 @@ int	main(int argc, char **argv)
 		clean_allocs(&env, 0);
 		return (3);
 	}
-	/*
 	if (init_dining(&env) != 0)
-		return (4);*/
+	{
+		clean_allocs(&env, 0);
+		return (4);
+	}
 	//print_details(input);
 	print_forks(&env);
 	clean_allocs(&env, 0);

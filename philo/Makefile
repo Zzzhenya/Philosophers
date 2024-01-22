@@ -14,15 +14,15 @@ CC		= cc
 
 NAME	= philo
 
-CFLAGS	= -Wall -Werror -Wextra -pthread -g -fsanitize=thread
+CFLAGS	= -Wall -Werror -Wextra -pthread
 
-#CFLAGS 	+=  
+CFLAGS += -g -fsanitize=thread
 
 SRCS	= 	main.c input_check.c \
 			print_message.c init_struct.c \
 			debug.c mtx_actions.c \
 			#get_milli_time.c \
-			#
+			#monitor.c \
 			#init_dining.c
 
 RM		= rm -rf

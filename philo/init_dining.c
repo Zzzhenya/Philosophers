@@ -116,67 +116,57 @@ void *routine(void *arg)
 	return ((void *)0);
 }
 
-void *checker(void *arg)
+int make_threads(t_env *env, int i, int ret)
 {
-	t_env	*env;
-	int		i;
-	long long time;
-
-	env = (t_env *)arg;
-	while (1)
+	if (pthread_create(&env->monitor, NULL, &checker, env) != 0)
 	{
-		i = 0;
-		while (i < env->ph_num)
-		{
-			pthread_mutex_lock(&env->ph[i].mtx_last_meal);
-			time = get_milli_time();
-			if (time >= env->ph[i].last_eat_time + env->life_time)
-			{
-				pthread_mutex_lock(&env->mtx_dead);
-				env->dead = 1;
-				pthread_mutex_unlock(&env->mtx_dead);
-				pthread_mutex_unlock(&env->ph[i].mtx_last_meal);
-				return ((void *)1);
-			}
-			pthread_mutex_unlock(&env->ph[i].mtx_last_meal);
-			i ++;
-		}
+		print_error("Pthread create error for monitor.");
+		return (ret ++);
 	}
-	return ((void *)0);
-}
-
-int init_dining(t_env *env)
-{
-	int 		i;
-	long long	time;
-	pthread_t	monitor;
-
-	i = 0;
-	time = get_milli_time();
-	if (time <= 0)
-		return (1);
-	pthread_create(&monitor, NULL, &checker, env);
 	while (i < env->ph_num)
 	{
-		env->ph[i].start = time;
-		env->ph[i].last_eat_time = time;
+		//env->ph[i].start = time;
+		//env->ph[i].last_eat_time = time;
 		if (pthread_create(&env->ph[i].thread, NULL, &routine, (void *)&env->ph[i]) != 0)
 		{
 			print_error("Pthread create error.");
-			return (destroy_all(env, 1));
+			return (ret ++);
 		}
 		i ++;
 	}
-	pthread_join(monitor, NULL);
-	i = 0;
+	return (ret);
+}
+
+int join_threads(t_env *env, int i, int ret)
+{
+	if (pthread_join(env->monitor, NULL) != 0)
+	{
+		print_error("Pthread join error for monitor.");
+		return (ret ++);
+	}
 	while (i < env->ph_num)
 	{
 		if (pthread_join(env->ph[i].thread, NULL) != 0)
 		{
 			print_error("Pthread join error.");
-			return (destroy_all(env, 1));
+			return (ret ++);
 		}
 		i ++;
 	}
+	return (ret);
+}
+
+int init_dining(t_env *env)
+{
+	//long long	time;
+	//pthread_t	monitor;
+
+	/*time = get_milli_time();
+	if (time <= 0)
+		return (1);*/
+	if (make_threads(env, 0, 0) != 0)
+		return (destroy_all(env, 1));
+	if (join_threads(env, 0, 0) != 0)
+		return (destroy_all(env, 1));
 	return (destroy_all(env, 0) != 0);
 }
