@@ -32,6 +32,7 @@ typedef struct s_philo
 	int 				sleep_len;
 	int 				life_len;
 	int 				eat_count;
+	int 				start_time;
 	long long 			last_eat_time;
 	int 				*status;
 	int					*ptr_lfork;
@@ -72,7 +73,7 @@ int			ft_atoi(const char *nptr);
 /* init_struct.c */
 
 void		setup_env(t_env *env, int argc, char **argv);
-void		init_struct(t_env *env, int argc, char **argv);
+void		init_struct(t_env *env);
 
 /* init_dining.c */
 
@@ -92,5 +93,9 @@ void		print_error(char *str);
 /* get_milli_time.c */
 
 long long 	get_milli_time(void);
+
+/* debug.c */
+
+void		print_forks(t_env *env);
 
 #endif

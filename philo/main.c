@@ -36,15 +36,19 @@ int	allocate_memory(t_env *env)
 	env->ph = malloc (sizeof(t_philo) * env->ph_num);
 	if (!env->ph)
 		return (1);
+	memset(env->ph, '\0', env->ph_num * sizeof(t_philo));
 	env->forks = malloc (sizeof(int) * env->ph_num);
 	if (!env->forks)
 		return(clean_allocs(env, 2));
+	memset(env->forks, '0', env->ph_num * sizeof(int));
 	env->mtx_forks = malloc (sizeof(pthread_mutex_t) * env->ph_num);
 	if (!env->mtx_forks)
-		return (clean_allocs(en`v, 3));
+		return (clean_allocs(env, 3));
+	//memset(env->mtx_forks, '\0', env->ph_num * sizeof(pthread_mutex_t));
 	env->status = malloc(sizeof(int) * env->ph_num);
-	if (!status)
+	if (!env->status)
 		return (clean_allocs(env, 4));
+	memset(env->status, '\0', env->ph_num * sizeof(int));
 	return (0);
 }
 
@@ -59,18 +63,24 @@ int	main(int argc, char **argv)
 	}
 	if (bad_input(argv))
 		return (1);
-	setup_env(env, argc, argv);
+	setup_env(&env, argc, argv);
 	if (allocate_memory(&env) != 0)
 	{
 		print_error("malloc failed.");
 		return (2);
 	}
-	init_struct(&env, argc, argv);
+	init_struct(&env);
 	if (init_mtx(&env) != 0)
+	{
+		// destroy already created mutexes
+		clean_allocs(&env, 0);
 		return (3);
+	}
+	/*
 	if (init_dining(&env) != 0)
-		return (4);
+		return (4);*/
 	//print_details(input);
-	clean_allocs(&env);
+	print_forks(&env);
+	clean_allocs(&env, 0);
 	return (0);
 }

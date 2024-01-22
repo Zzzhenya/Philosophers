@@ -1,6 +1,6 @@
 #include "libphilo.h"
-
-void	print_details(t_input *input)
+/*
+void	print_details(t_env *input)
 {
 	int	i;
 
@@ -25,4 +25,34 @@ void	print_details(t_input *input)
 		printf("Fork %d: @%p\n", i, &input->mutex[i]);
 		i ++;
 	}
+}*/
+
+void  print_forks(t_env *env)
+{
+	int i;
+
+	
+	printf("\nmtx_Forks\n");
+	i = 0;
+	while (i < env->ph_num)
+	{
+		printf("%p ", &env->mtx_forks[i]);
+		i ++;
+	}
+	printf("\nForks\n");
+	i = 0;
+	while (i < env->ph_num)
+	{
+		printf("%p : %d ", &env->forks[i], env->forks[i]);
+		i ++;
+	}
+	printf("\nFinal Forks \n");
+	i = 0;
+	while (i < env->ph_num)
+	{
+		printf("%p %p : ", env->ph[i].ptr_lfork, env->ph[i].ptr_rfork);
+		printf("%p %p\n", env->ph[i].ptr_mtx_lfork, env->ph[i].ptr_mtx_rfork);
+		i ++;
+	}
+
 }

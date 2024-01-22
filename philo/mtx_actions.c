@@ -9,15 +9,20 @@ int destroy_forks(t_env *env)
 	ret = 0;
 	while (i < env->ph_num)
 	{
-		if (pthread_mutex_destroy(&env->forks[i]) != 0)
+		if (pthread_mutex_destroy(&env->mtx_forks[i]) != 0)
 		{
 			print_error ("Fork mutex destroy error.");
-			ret ++;
+			ret += (i + 1);
 		}
-		if (pthread_mutex_destroy(&env->ph[i].mtx_last_meal) != 0)
+		if (pthread_mutex_destroy(&env->ph[i].mtx_last_eat) != 0)
 		{
 			print_error ("Last meal mutex destroy error.");
-			ret += 2;
+			ret += (i + 1) + (PHILO_MAX);
+		}
+		if (pthread_mutex_destroy(&env->ph[i].mtx_status) != 0)
+		{
+			print_error("philo status mutex destroy error.");
+			ret += (i + 1) + (PHILO_MAX * 2);
 		}
 		i ++;
 	}
@@ -41,9 +46,9 @@ int destroy_all(t_env *env, int type)
 		print_error ("Pthread status check mutex destroy error.");
 		ret ++;
 	}
-	if (env->min_eat >= 0)
+	if (env->eat_count >= 0)
 	{
-		if (pthread_mutex_destroy(&env->mtx_ecount) != 0)
+		if (pthread_mutex_destroy(&env->mtx_eat_philos) != 0)
 		{
 			print_error ("Eat count check mutex destroy error.");
 			ret ++;
@@ -66,15 +71,20 @@ int init_forkmtx(t_env *env)
 	i = 0;
 	while (i < env->ph_num)
 	{
-		if (pthread_mutex_init(&env->forks[i], NULL) != 0)
+		if (pthread_mutex_init(&env->mtx_forks[i], NULL) != 0)
 		{
 			print_error("Fork mutex init error.");
 			return (i + 1);
 		}
-		if (pthread_mutex_init(&env->ph[i].mtx_last_meal, NULL) != 0)
+		if (pthread_mutex_init(&env->ph[i].mtx_last_eat, NULL) != 0)
 		{
 			print_error("last meal mutex init error.");
-			return ( (2 * i) + 2);
+			return ( (i + 1) + PHILO_MAX);
+		}
+		if (pthread_mutex_init(&env->ph[i].mtx_status, NULL) != 0)
+		{
+			print_error("philo status mutex init error.");
+			return ( (i + 1) + (PHILO_MAX * 2));
 		}
 		i ++;
 	}
@@ -95,9 +105,9 @@ int	init_mtx(t_env *env)
 		print_error("Thread status check mutex init error.");
 		return (2);
 	}
-	if (env->min_eat > 0)
+	if (env->eat_count > 0)
 	{
-		if (pthread_mutex_init(&env->mtx_ecount, NULL) != 0)
+		if (pthread_mutex_init(&env->mtx_eat_philos, NULL) != 0)
 		{
 			print_error("Eat count check mutex init error.");
 			return (3);

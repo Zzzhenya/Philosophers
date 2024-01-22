@@ -22,8 +22,12 @@ void	setup_env(t_env *env, int argc, char **argv)
 		env->eat_count = ft_atoi(argv[5]);
 	else
 		env->eat_count = -1;
-	env->eat_philos = env->ph_num;
+	env->eat_philo_count = env->ph_num;
 	env->dead = 0;
+	/*env->forks = NULL;
+	env->status = NULL;
+	env->ph = NULL;
+	env->mtx_forks = NULL;*/
 }
 
 void	setup_philos(t_env *env)
@@ -33,45 +37,43 @@ void	setup_philos(t_env *env)
 	i = 0;
 	while (i < env->ph_num)
 	{
-		env->ph[i].id = i + 1;
 		env->ph[i].ph_num = env->ph_num;
-		env->ph[i].eat_time = env->eat_time;
-		env->ph[i].sleep_time = env->sleep_time;
-		env->ph[i].life_time = env->life_time;
-		env->ph[i].min_eat = env->min_eat;
-		env->ph[i].start = 0; // Start here or when thread created?
+		env->ph[i].id = i + 1;
+		env->ph[i].eat_len = env->eat_len;
+		env->ph[i].sleep_len = env->sleep_len;
+		env->ph[i].life_len = env->life_len;
+		env->ph[i].eat_count = env->eat_count;
+		env->ph[i].start_time = 0; // Start here or when thread created?
 		env->ph[i].last_eat_time = 0;
-		env->ph[i].dead = &env->dead;
-		env->ph[i].all_eat = &env->all_eat;
+		env->ph[i].status = &env->status[i];
 		env->ph[i].mtx_print = &env->mtx_print;
-		env->ph[i].mtx_dead = &env->mtx_dead;
-		env->ph[i].mtx_ecount = &env->mtx_ecount;
+		env->forks[i] = 0;
 		i ++;
 	}
 }
 
-void	setup_forks(t_env *env)
+void	setup_forks(t_env *env, int i)
 {
-	int	i;
-
-	i = 0;
 	while (i < env->ph_num)
 	{
-		if (i == env->ph_num - 1)
-			env->ph[i].rfork = &env->forks[0];
-		else
-			env->ph[i].rfork = &env->forks[i];
 		if (i == 0)
-			env->ph[i].lfork = &env->forks[env->ph_num - 1];
+		{
+			env->ph[i].ptr_lfork = &env->forks[env->ph_num - 1];
+			env->ph[i].ptr_mtx_lfork = &env->mtx_forks[env->ph_num - 1];
+		}
 		else
-			env->ph[i].lfork = &env->forks[i - 1];
+		{
+			env->ph[i].ptr_lfork = &env->forks[i - 1];
+			env->ph[i].ptr_mtx_lfork = &env->mtx_forks[i - 1];
+		}
+		env->ph[i].ptr_rfork = &env->forks[i];
+		env->ph[i].ptr_mtx_rfork = &env->mtx_forks[i];
 		i ++;
 	}
 }
 
-void	init_struct(t_env *env, int argc, char **argv)
+void	init_struct(t_env *env)
 {
-	//setup_env(env, argc, argv);
 	setup_philos(env);
-	setup_forks(env);
+	setup_forks(env, 0);
 }
