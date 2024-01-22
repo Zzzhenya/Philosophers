@@ -96,7 +96,7 @@ void *routine(void *arg)
 		philo_eat(philo);
 		philo_sleep(philo);
 		philo_think(philo);
-		//usleep(10);
+		custom_sleep(2);
 	}
 	return ((void *)0);
 }
