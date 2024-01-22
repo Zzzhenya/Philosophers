@@ -10,18 +10,18 @@ long long get_milli_time(void)
 	militime = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (militime);
 }
-/*
+
 int custom_sleep(long long millilen)
 {
 	long long start;
 
 	start = get_milli_time();
-	while (get_milli_time() - start < millilen)
+	while ((get_milli_time() - start) < millilen)
 	{
 		usleep(500);
 	}
 	return (0);
-}*/
+}
 
 int	is_alive(t_philo *philo)
 {

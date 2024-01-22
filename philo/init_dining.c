@@ -54,7 +54,8 @@ void philo_eat(t_philo *philo)
 		pick_fork(philo, 'r');
 		update_meal_time(philo);
 		print(philo, "is eating");
-		usleep(philo->eat_len * 1000);
+		custom_sleep(philo->eat_len);
+		//usleep(philo->eat_len * 1000);
 		return_fork(philo, 'l');
 		return_fork(philo, 'r');
 	}
@@ -64,16 +65,18 @@ void philo_eat(t_philo *philo)
 		pick_fork(philo, 'l');
 		update_meal_time(philo);
 		print(philo, "is eating");
-		usleep(philo->eat_len * 1000);
-		return_fork(philo, 'r');
+		custom_sleep(philo->eat_len);
+		//usleep(philo->eat_len * 1000);
 		return_fork(philo, 'l');
+		return_fork(philo, 'r');
 	}
 }
 
 void philo_sleep(t_philo *philo)
 {
 	print(philo, "is sleeping");
-	usleep(philo->sleep_len * 1000);
+	//usleep(philo->sleep_len * 1000);
+	custom_sleep(philo->sleep_len);
 }
 
 void philo_think(t_philo *philo)

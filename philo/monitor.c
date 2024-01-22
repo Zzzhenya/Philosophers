@@ -34,6 +34,8 @@ void *checker(void *arg)
 				env->dead = 1;
 				pthread_mutex_unlock(&env->mtx_dead);
 				kill_all_threads(env);
+				if (env->ph_num == 1)
+					pthread_mutex_unlock(env->ph[0].ptr_mtx_lfork);
 				return ((void *)1);
 			}
 			pthread_mutex_unlock(&env->ph[i].mtx_last_eat);
