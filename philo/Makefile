@@ -21,9 +21,10 @@ CFLAGS += -g -fsanitize=thread
 SRCS	= 	main.c input_check.c \
 			print_message.c init_struct.c \
 			debug.c mtx_actions.c \
-			#get_milli_time.c \
-			#monitor.c \
-			#init_dining.c
+			init_dining.c \
+			get_milli_time.c \
+			monitor.c \
+			#
 
 RM		= rm -rf
 

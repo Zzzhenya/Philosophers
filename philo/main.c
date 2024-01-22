@@ -70,6 +70,7 @@ int	main(int argc, char **argv)
 		return (2);
 	}
 	init_struct(&env);
+	
 	if (init_mtx(&env) != 0)
 	{
 		// destroy already created mutexes
@@ -82,7 +83,8 @@ int	main(int argc, char **argv)
 		return (4);
 	}
 	//print_details(input);
-	print_forks(&env);
+	//print_forks(&env);
+	//print_status(&env);
 	clean_allocs(&env, 0);
 	return (0);
 }

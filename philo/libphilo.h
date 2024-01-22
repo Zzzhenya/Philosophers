@@ -32,7 +32,7 @@ typedef struct s_philo
 	int 				sleep_len;
 	int 				life_len;
 	int 				eat_count;
-	int 				start_time;
+	long long			start_time;
 	long long 			last_eat_time;
 	int 				*status;
 	int					*ptr_lfork;
@@ -86,6 +86,10 @@ void 		print(t_philo *philo, char *msg);
 int			init_mtx(t_env *env);
 int 		destroy_all(t_env *env, int type);
 
+/* monitor.c */
+
+void *checker(void *arg);
+
 /* print_message.c */
 
 void		print_error(char *str);
@@ -93,9 +97,14 @@ void		print_error(char *str);
 /* get_milli_time.c */
 
 long long 	get_milli_time(void);
+int 		custom_sleep(long long millilen);
+int	is_alive(t_philo *philo);
+void print(t_philo *philo, char *msg);
+
 
 /* debug.c */
 
 void		print_forks(t_env *env);
+void		print_status(t_env *env);
 
 #endif

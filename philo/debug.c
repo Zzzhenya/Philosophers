@@ -56,3 +56,22 @@ void  print_forks(t_env *env)
 	}
 
 }
+
+void print_status(t_env *env)
+{
+	int i = 0;
+	
+	while (i < env->ph_num)
+	{
+		printf("%p %d, ", &env->status[i], env->status[i]);
+		i ++;
+	}
+	printf("\n");
+	i = 0;
+	while (i < env->ph_num)
+	{
+		printf("%p %d, ", env->ph[i].status, *env->ph[i].status);
+		i ++;
+	}
+	printf("\n");
+}

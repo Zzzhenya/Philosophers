@@ -24,10 +24,10 @@ void	setup_env(t_env *env, int argc, char **argv)
 		env->eat_count = -1;
 	env->eat_philo_count = env->ph_num;
 	env->dead = 0;
-	/*env->forks = NULL;
+	env->forks = NULL;
 	env->status = NULL;
 	env->ph = NULL;
-	env->mtx_forks = NULL;*/
+	env->mtx_forks = NULL;
 }
 
 void	setup_philos(t_env *env)
@@ -48,6 +48,7 @@ void	setup_philos(t_env *env)
 		env->ph[i].status = &env->status[i];
 		env->ph[i].mtx_print = &env->mtx_print;
 		env->forks[i] = 0;
+		env->status[i] = 0;
 		i ++;
 	}
 }
