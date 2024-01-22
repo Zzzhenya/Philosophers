@@ -41,7 +41,6 @@ void update_meal_time(t_philo *philo)
 	currtime = get_milli_time();
 	philo->last_eat_time = currtime;
 	pthread_mutex_unlock(&philo->mtx_last_eat);
-
 }
 
 void philo_eat(t_philo *philo)
@@ -67,8 +66,8 @@ void philo_eat(t_philo *philo)
 		print(philo, "is eating");
 		custom_sleep(philo->eat_len);
 		//usleep(philo->eat_len * 1000);
-		return_fork(philo, 'l');
 		return_fork(philo, 'r');
+		return_fork(philo, 'l');
 	}
 }
 
@@ -82,21 +81,28 @@ void philo_sleep(t_philo *philo)
 void philo_think(t_philo *philo)
 {
 	print(philo, "is thinking");
+	custom_sleep(1);
 }
 
 void *routine(void *arg)
 {
 	t_philo *philo;
-	//long long	time;
 
 	philo = (t_philo *)arg;
 	philo_think(philo);
 	while (is_alive(philo))
 	{
 		philo_eat(philo);
+		if (philo->eat_count > -1)
+			philo->eat_count --;
+		if (philo->eat_count == 0)
+		{
+			pthread_mutex_lock(&philo->mtx_status);
+			*philo->status = 1;
+			pthread_mutex_unlock(&philo->mtx_status);
+		}
 		philo_sleep(philo);
 		philo_think(philo);
-		custom_sleep(2);
 	}
 	return ((void *)0);
 }
