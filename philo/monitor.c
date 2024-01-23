@@ -57,7 +57,7 @@ void *checker(void *arg)
 		i = 0;
 		while (i < env->ph_num)
 		{
-			if (time_to_die(env, i))// || eat_count_complete(env))
+			if (time_to_die(env, i) || eat_count_complete(env))
 			{
 				kill_all_threads(env);
 				return ((void *)1);

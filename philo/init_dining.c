@@ -5,13 +5,13 @@ void pick_fork(t_philo *philo, char d)
 	if (d == 'l')
 	{
 		pthread_mutex_lock(philo->ptr_mtx_lfork);
-		print(philo, "has taken l fork");
+		print(philo, "has taken a fork");
 		*philo->ptr_lfork = philo->id;
 	}
 	else
 	{
 		pthread_mutex_lock(philo->ptr_mtx_rfork);
-		print(philo, "has taken r fork");
+		print(philo, "has taken a fork");
 		*philo->ptr_rfork = philo->id;
 	}
 }
@@ -46,9 +46,11 @@ void update_meal_time(t_philo *philo)
 static void routine_for_one(t_philo *philo)
 {
 	pthread_mutex_lock(philo->ptr_mtx_lfork);
-	print(philo, "has taken l fork");
+	print(philo, "has taken a fork");
+	*philo->ptr_lfork = philo->id;
+	*philo->ptr_lfork = 0;
 	pthread_mutex_unlock(philo->ptr_mtx_lfork);
-	print(philo, "put down a fork");
+	//print(philo, "put down a fork");
 	custom_sleep(philo->life_len);
 }
 
@@ -98,18 +100,14 @@ void *routine(void *arg)
 	while (is_alive(philo))
 	{
 		philo_eat(philo);
-		/*
-		if (philo->ph_num > 1)
+		if (philo->eat_count > -1)
+			philo->eat_count --;
+		if (philo->eat_count == 0)
 		{
-			if (philo->eat_count > -1)
-				philo->eat_count --;
-			if (philo->eat_count == 0)
-			{
-				pthread_mutex_lock(philo->mtx_eat_philos);
-				*philo->eat_philo_count -= 1;
-				pthread_mutex_unlock(philo->mtx_eat_philos);
-			}
-		}*/
+			pthread_mutex_lock(philo->mtx_eat_philos);
+			*philo->eat_philo_count -= 1;
+			pthread_mutex_unlock(philo->mtx_eat_philos);
+		}
 		philo_sleep(philo);
 		philo_think(philo);
 		custom_sleep(1);
