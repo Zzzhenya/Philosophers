@@ -31,11 +31,25 @@ int time_to_die(t_env *env, int i)
 	return (0);
 }	
 
+int eat_count_complete(t_env *env)
+{
+	pthread_mutex_lock(&env->mtx_eat_philos);
+	if (env->eat_philo_count <= 0)
+	{
+		pthread_mutex_unlock(&env->mtx_eat_philos);
+		return (1);
+	}
+	else
+	{
+		pthread_mutex_unlock(&env->mtx_eat_philos);
+		return (0);
+	} 
+}
+
 void *checker(void *arg)
 {
 	t_env	*env;
 	int		i;
-	//long long time;
 
 	env = (t_env *)arg;
 	while (1)
@@ -43,25 +57,13 @@ void *checker(void *arg)
 		i = 0;
 		while (i < env->ph_num)
 		{
-			//pthread_mutex_lock(&env->ph[i].mtx_last_eat);
-			//time = get_milli_time();
-			//if (time >= env->ph[i].last_eat_time + env->life_len)
-			//{
-				//pthread_mutex_unlock(&env->ph[i].mtx_last_eat);
-				//print(&env->ph[i], "is dead");
-				//pthread_mutex_lock(&env->mtx_dead);
-				//env->dead = 1;
-				//pthread_mutex_unlock(&env->mtx_dead);
-			if (time_to_die(env, i))
+			if (time_to_die(env, i))// || eat_count_complete(env))
 			{
 				kill_all_threads(env);
-				if (env->ph_num == 1)
-					pthread_mutex_unlock(env->ph[0].ptr_mtx_lfork);
 				return ((void *)1);
 			}
-			//pthread_mutex_unlock(&env->ph[i].mtx_last_eat);
 			i ++;
 		}
 	}
 	return ((void *)0);
-}
+}	

@@ -35,11 +35,13 @@ typedef struct s_philo
 	long long			start_time;
 	long long 			last_eat_time;
 	int 				*status;
+	int					*eat_philo_count;
 	int					*ptr_lfork;
 	int 				*ptr_rfork;
 	pthread_mutex_t		*ptr_mtx_lfork;
 	pthread_mutex_t		*ptr_mtx_rfork;
 	pthread_mutex_t		*mtx_print;
+	pthread_mutex_t		*mtx_eat_philos;
 	pthread_mutex_t		mtx_status;
 	pthread_mutex_t		mtx_last_eat;
 } t_philo;
@@ -80,6 +82,7 @@ void		init_struct(t_env *env);
 int 		init_dining(t_env *env);
 void 		*routine(void *arg);
 void 		print(t_philo *philo, char *msg);
+void return_fork(t_philo *philo, char d);
 
 /* mtx_actions.c */
 

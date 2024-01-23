@@ -55,7 +55,7 @@ int destroy_all(t_env *env, int type)
 		}
 	}
 	if (destroy_forks(env) != 0)
-		ret ++; 
+		ret ++;
 	if (type == 1)
 		return (2);
 	else

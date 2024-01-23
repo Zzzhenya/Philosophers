@@ -43,10 +43,12 @@ void	setup_philos(t_env *env)
 		env->ph[i].sleep_len = env->sleep_len;
 		env->ph[i].life_len = env->life_len;
 		env->ph[i].eat_count = env->eat_count;
-		env->ph[i].start_time = 0; // Start here or when thread created?
+		env->ph[i].start_time = 0;
 		env->ph[i].last_eat_time = 0;
 		env->ph[i].status = &env->status[i];
+		env->ph[i].eat_philo_count = &env->eat_philo_count;
 		env->ph[i].mtx_print = &env->mtx_print;
+		env->ph[i].mtx_eat_philos = &env->mtx_eat_philos;
 		env->forks[i] = 0;
 		env->status[i] = 0;
 		i ++;
