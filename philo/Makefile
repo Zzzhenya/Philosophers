@@ -22,7 +22,7 @@ SRCS	= 	main.c input_check.c \
 			print_message.c init_struct.c \
 			debug.c mtx_actions.c \
 			init_dining.c \
-			get_milli_time.c \
+			utils.c \
 			monitor.c \
 			#
 

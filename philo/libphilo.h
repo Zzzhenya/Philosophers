@@ -97,7 +97,7 @@ void *checker(void *arg);
 
 void		print_error(char *str);
 
-/* get_milli_time.c */
+/* utils.c */
 
 long long 	get_milli_time(void);
 int 		custom_sleep(long long millilen);
