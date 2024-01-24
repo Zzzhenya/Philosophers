@@ -131,11 +131,11 @@ int make_threads(t_env *env, int i, int ret)
 {
 	long long time;
 
+	time = get_milli_time();
+	if (time <= 0)
+		return (1);
 	while (i < env->ph_num)
 	{
-		time = get_milli_time();
-		//if (time <= 0)
-		//	return ((void *)1);
 		env->ph[i].start_time = time;
 		env->ph[i].last_eat_time = time;
 		if (pthread_create(&env->ph[i].thread, NULL, &routine, (void *)&env->ph[i]) != 0)
