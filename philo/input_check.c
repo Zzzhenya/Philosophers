@@ -61,11 +61,6 @@ int not_in_range(char *str, int i)
 		print_error("Philos and times should be larger than 0.");
 		return (1);
 	}
-	else if ((i == 3 || i == 4)  && ret * 1000 >= USLEEP_MAX)
-	{
-		print_error("Eat or sleep might be of usleep range.");
-		return (2);
-	}
 	else if (i == 1 && ret > 200)
 	{
 		print_error("Maximum number of 200 Philosophers.");
