@@ -55,7 +55,7 @@ void update_meal_time(t_philo *philo)
 	pthread_mutex_unlock(&philo->mtx_last_eat);
 }
 
-static void routine_for_one(t_philo *philo)
+static int routine_for_one(t_philo *philo)
 {
 	pthread_mutex_lock(philo->ptr_mtx_lfork);
 	print(philo, "has taken a fork");
@@ -64,13 +64,15 @@ static void routine_for_one(t_philo *philo)
 	pthread_mutex_unlock(philo->ptr_mtx_lfork);
 	//print(philo, "put down a fork");
 	custom_sleep(philo->life_len);
+	return (0);
 }
 
 void philo_eat(t_philo *philo)
 {
-	if (philo->ph_num == 1)
-		routine_for_one (philo);
-	else if ((philo->id % 2))
+	//if (philo->ph_num == 1)
+	//	routine_for_one (philo);
+	//else if ((philo->id % 2))
+	if ((philo->id % 2))
 	{
 		pick_fork(philo, 'l');
 		pick_fork(philo, 'r');
@@ -103,6 +105,18 @@ void philo_think(t_philo *philo)
 	print(philo, "is thinking");
 }
 
+void optional_counter(t_philo *philo)
+{
+	if (philo->eat_count > -1)
+		philo->eat_count --;
+	if (philo->eat_count == 0)
+	{
+		pthread_mutex_lock(philo->mtx_eat_philos);
+		*philo->eat_philo_count -= 1;
+		pthread_mutex_unlock(philo->mtx_eat_philos);
+	}
+}
+
 void *routine(void *arg)
 {
 	t_philo *philo;
@@ -111,15 +125,10 @@ void *routine(void *arg)
 	philo_think(philo);
 	while (is_alive(philo))
 	{
+		if (philo->ph_num == 1)
+			return ((void *)routine_for_one (philo));
 		philo_eat(philo);
-		if (philo->eat_count > -1)
-			philo->eat_count --;
-		if (philo->eat_count == 0)
-		{
-			pthread_mutex_lock(philo->mtx_eat_philos);
-			*philo->eat_philo_count -= 1;
-			pthread_mutex_unlock(philo->mtx_eat_philos);
-		}
+		optional_counter(philo);
 		philo_sleep(philo);
 		philo_think(philo);
 		custom_sleep(1);
