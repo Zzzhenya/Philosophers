@@ -64,18 +64,28 @@ void *checker(void *arg)
 	int		i;
 
 	env = (t_env *)arg;
-	while (1)
+	/*
+	if (env->ph_num == 1)
 	{
-		i = 0;
-		while (i < env->ph_num)
-		{
-			if (time_to_die(env, i) || eat_count_complete(env))
-			{
-				kill_all_threads(env);
-				return ((void *)1);
-			}
-			i ++;
-		}
+		if (get_milli_time() >= env->start_time + env->life_len)
+			kill_all_threads(env);
+		return ((void *)1);
 	}
+	else
+	{*/
+		while (1)
+		{
+			i = 0;
+			while (i < env->ph_num)
+			{
+				if (time_to_die(env, i) || eat_count_complete(env))
+				{
+					kill_all_threads(env);
+					return ((void *)1);
+				}
+				i ++;
+			}
+		}
+	//}
 	return ((void *)0);
 }	
