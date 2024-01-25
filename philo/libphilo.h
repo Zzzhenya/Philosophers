@@ -104,6 +104,13 @@ int 		custom_sleep(long long millilen);
 int	is_alive(t_philo *philo);
 void print(t_philo *philo, char *msg);
 
+/* eat_routine.c */
+void	philo_eat(t_philo *philo);
+int	routine_for_one(t_philo *philo);
+
+/* routine.c */
+void *routine(void *arg);
+
 
 /* debug.c */
 
