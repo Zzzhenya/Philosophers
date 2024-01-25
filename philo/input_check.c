@@ -51,9 +51,9 @@ static int	not_int(char *str)
 	return (0);
 }
 
-int not_in_range(char *str, int i)
+int	not_in_range(char *str, int i)
 {
-	int ret;
+	int	ret;
 
 	ret = ft_atoi(str);
 	if (ret <= 0)
@@ -73,7 +73,7 @@ int not_in_range(char *str, int i)
 int	bad_input(char **argv)
 {
 	int	i;
-	int val;
+	int	val;
 
 	i = 1;
 	while (argv[i])
