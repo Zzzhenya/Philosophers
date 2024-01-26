@@ -28,6 +28,7 @@ void *routine(void *arg)
 	t_philo *philo;
 
 	philo = (t_philo *)arg;
+	//philo->last_eat_time = get_milli_time();
 	philo_think(philo);
 	if (philo->ph_num == 1)
 	{

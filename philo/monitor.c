@@ -46,7 +46,7 @@ int time_to_die(t_env *env, int i)
 int eat_count_complete(t_env *env)
 {
 	pthread_mutex_lock(&env->mtx_eat_philos);
-	if (env->eat_philo_count <= 0)
+	if (env->eat_philo_count == 0)
 	{
 		pthread_mutex_unlock(&env->mtx_eat_philos);
 		return (1);
