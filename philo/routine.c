@@ -29,13 +29,13 @@ void *routine(void *arg)
 
 	philo = (t_philo *)arg;
 	philo_think(philo);
+	if (philo->ph_num == 1)
+	{
+		routine_for_one (philo);
+		return ((void *)0);
+	}
 	while (is_alive(philo))
 	{
-		if (philo->ph_num == 1)
-		{
-			routine_for_one (philo);
-			return ((void *)0);
-		}
 		philo_eat(philo);
 		optional_counter(philo);
 		philo_sleep(philo);
