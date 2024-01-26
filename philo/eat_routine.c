@@ -42,7 +42,7 @@ void	return_fork(t_philo *philo, char d)
 	}
 
 }
-/*
+
 int	routine_for_one(t_philo *philo)
 {
 	pthread_mutex_lock(philo->ptr_mtx_lfork);
@@ -50,10 +50,10 @@ int	routine_for_one(t_philo *philo)
 	*philo->ptr_lfork = philo->id;
 	*philo->ptr_lfork = 0;
 	pthread_mutex_unlock(philo->ptr_mtx_lfork);
+	//print(philo, "put down a fork");
 	custom_sleep(philo->life_len);
-	print(philo, "is dead");	
 	return (0);
-}*/
+}
 
 void	philo_eat(t_philo *philo)
 {
