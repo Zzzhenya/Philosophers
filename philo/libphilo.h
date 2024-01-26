@@ -55,7 +55,6 @@ typedef struct s_env
 	int					eat_count;
 	int					eat_philo_count;
 	int					dead;
-	long long 				start_time;
 	int					*forks;
 	int					*status;
 	t_philo				*ph;
@@ -107,7 +106,6 @@ void		print(t_philo *philo, char *msg);
 
 void		philo_eat(t_philo *philo);
 int			routine_for_one(t_philo *philo);
-void		update_meal_time(t_philo *philo);
 
 /* routine.c */
 

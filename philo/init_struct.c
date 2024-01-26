@@ -28,7 +28,6 @@ void	setup_env(t_env *env, int argc, char **argv)
 	env->status = NULL;
 	env->ph = NULL;
 	env->mtx_forks = NULL;
-	env->start_time = 0;
 }
 
 void	setup_philos(t_env *env)

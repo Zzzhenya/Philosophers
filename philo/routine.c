@@ -40,24 +40,19 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	update_meal_time(philo);
-	//philo->last_eat_time = get_milli_time();
-	//philo->start_time = get_milli_time();
 	philo_think(philo);
 	while (is_alive(philo))
 	{
-		/*if (philo->ph_num == 1)
+		if (philo->ph_num == 1)
 		{
 			routine_for_one (philo);
-			return ((void *)1);
-		}*/
+			return ((void *)0);
+		}
 		philo_eat(philo);
 		optional_counter(philo);
 		philo_sleep(philo);
 		philo_think(philo);
-		usleep (50);
-		//custom_sleep(1);
+		custom_sleep(1);
 	}
-	print(philo, "is dead");
 	return ((void *)0);
 }

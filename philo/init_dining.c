@@ -14,17 +14,15 @@
 
 int	make_threads(t_env *env, int i, int ret)
 {
-	env->start_time = get_milli_time();
-	if (env->start_time <= 0)
+	long long	time;
+
+	time = get_milli_time();
+	if (time <= 0)
 		return (1);
-	if (pthread_create(&env->monitor, NULL, &checker, env) != 0)
-	{
-		print_error("Pthread create error for monitor.");
-		return (ret ++);
-	}
 	while (i < env->ph_num)
 	{
-		env->ph[i].start_time = env->start_time;
+		env->ph[i].start_time = time;
+		env->ph[i].last_eat_time = time;
 		if (pthread_create(&env->ph[i].thread, NULL, &routine, (void *)&env->ph[i]) != 0)
 		{
 			print_error("Pthread create error.");
@@ -32,16 +30,16 @@ int	make_threads(t_env *env, int i, int ret)
 		}
 		i ++;
 	}
+	if (pthread_create(&env->monitor, NULL, &checker, env) != 0)
+	{
+		print_error("Pthread create error for monitor.");
+		return (ret ++);
+	}
 	return (ret);
 }
 
 int join_threads(t_env *env, int i, int ret)
 {
-	if (pthread_join(env->monitor, NULL) != 0)
-	{
-		print_error("Pthread join error for monitor.");
-		return (ret ++);
-	}
 	while (i < env->ph_num )
 	{
 		if (pthread_join(env->ph[i].thread, NULL) != 0)
@@ -50,6 +48,11 @@ int join_threads(t_env *env, int i, int ret)
 			return (ret ++);
 		}
 		i ++;
+	}
+	if (pthread_join(env->monitor, NULL) != 0)
+	{
+		print_error("Pthread join error for monitor.");
+		return (ret ++);
 	}
 	return (ret);
 }
