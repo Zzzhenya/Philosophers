@@ -1,29 +1,17 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   routine.c                                          :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: sde-silv <sde-silv@student.42berlin.d      +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/25 14:26:39 by sde-silv          #+#    #+#             */
-/*   Updated: 2024/01/25 14:26:40 by sde-silv         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
-
 #include "libphilo.h"
 
-void	philo_sleep(t_philo *philo)
+void philo_sleep(t_philo *philo)
 {
 	print(philo, "is sleeping");
 	custom_sleep(philo->sleep_len);
 }
 
-void	philo_think(t_philo *philo)
+void philo_think(t_philo *philo)
 {
 	print(philo, "is thinking");
 }
 
-void	optional_counter(t_philo *philo)
+void optional_counter(t_philo *philo)
 {
 	if (philo->eat_count > -1)
 		philo->eat_count --;
@@ -35,9 +23,9 @@ void	optional_counter(t_philo *philo)
 	}
 }
 
-void	*routine(void *arg)
+void *routine(void *arg)
 {
-	t_philo	*philo;
+	t_philo *philo;
 
 	philo = (t_philo *)arg;
 	philo_think(philo);

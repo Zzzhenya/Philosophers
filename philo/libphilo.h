@@ -25,45 +25,47 @@
 
 typedef struct s_philo
 {
-	pthread_t			thread;
-	int					ph_num;
-	int					id;
-	int					eat_len;
-	int					sleep_len;
-	int					life_len;
-	int					eat_count;
+	pthread_t 			thread;
+	int 				ph_num;
+	int 				id;
+	int 				eat_len;
+	int 				sleep_len;
+	int 				life_len;
+	int 				eat_count;
 	long long			start_time;
-	long long			last_eat_time;
-	int					*status;
+	long long 			last_eat_time;
+	int 				*status;
 	int					*eat_philo_count;
 	int					*ptr_lfork;
-	int					*ptr_rfork;
+	int 				*ptr_rfork;
 	pthread_mutex_t		*ptr_mtx_lfork;
 	pthread_mutex_t		*ptr_mtx_rfork;
 	pthread_mutex_t		*mtx_print;
 	pthread_mutex_t		*mtx_eat_philos;
 	pthread_mutex_t		mtx_status;
 	pthread_mutex_t		mtx_last_eat;
-}	t_philo;
+} t_philo;
 
 typedef struct s_env
 {
-	int					ph_num;
-	int					eat_len;
-	int					sleep_len;
-	int					life_len;
-	int					eat_count;
-	int					eat_philo_count;
-	int					dead;
+	int 				ph_num;
+	int 				eat_len;
+	int 				sleep_len;
+	int 				life_len;
+	int 				eat_count;
+	int 				eat_philo_count;
+	int 				dead;
 	int					*forks;
-	int					*status;
+	int 				*status;
 	t_philo				*ph;
 	pthread_mutex_t		*mtx_forks;
-	pthread_t			monitor;
+	pthread_t 			monitor;
 	pthread_mutex_t		mtx_eat_philos;
 	pthread_mutex_t		mtx_print;
 	pthread_mutex_t		mtx_dead;
-}	t_env;
+} t_env;
+
+/* main.c */
 
 /* input_check.c */
 
@@ -77,19 +79,19 @@ void		init_struct(t_env *env);
 
 /* init_dining.c */
 
-int			init_dining(t_env *env);
-void		*routine(void *arg);
-void		print(t_philo *philo, char *msg);
-void		return_fork(t_philo *philo, char d);
+int 		init_dining(t_env *env);
+void 		*routine(void *arg);
+void 		print(t_philo *philo, char *msg);
+void return_fork(t_philo *philo, char d);
 
 /* mtx_actions.c */
 
 int			init_mtx(t_env *env);
-int			destroy_all(t_env *env, int type);
+int 		destroy_all(t_env *env, int type);
 
 /* monitor.c */
 
-void		*checker(void *arg);
+void *checker(void *arg);
 
 /* print_message.c */
 
@@ -97,19 +99,18 @@ void		print_error(char *str);
 
 /* utils.c */
 
-long long	get_milli_time(void);
-int			custom_sleep(long long millilen);
-int			is_alive(t_philo *philo);
-void		print(t_philo *philo, char *msg);
+long long 	get_milli_time(void);
+int 		custom_sleep(long long millilen);
+int	is_alive(t_philo *philo);
+void print(t_philo *philo, char *msg);
 
 /* eat_routine.c */
-
-void		philo_eat(t_philo *philo);
-int			routine_for_one(t_philo *philo);
+void	philo_eat(t_philo *philo);
+int	routine_for_one(t_philo *philo);
 
 /* routine.c */
+void *routine(void *arg);
 
-void		*routine(void *arg);
 
 /* debug.c */
 

@@ -12,9 +12,9 @@
 
 #include "libphilo.h"
 
-int	make_threads(t_env *env, int i, int ret)
+int make_threads(t_env *env, int i, int ret)
 {
-	long long	time;
+	long long time;
 
 	time = get_milli_time();
 	if (time <= 0)
