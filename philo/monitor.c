@@ -64,6 +64,8 @@ void *checker(void *arg)
 	int		i;
 
 	env = (t_env *)arg;
+	if (env->ph_num == 1)
+		return;
 	while (1)
 	{
 		i = 0;
