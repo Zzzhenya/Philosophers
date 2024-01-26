@@ -52,7 +52,7 @@ int	routine_for_one(t_philo *philo)
 	pthread_mutex_unlock(philo->ptr_mtx_lfork);
 	//print(philo, "put down a fork");
 	custom_sleep(philo->life_len);
-	print(&env->ph[i], "is dead");
+	print(philo, "is dead");
 	return (0);
 }
 
