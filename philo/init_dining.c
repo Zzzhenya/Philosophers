@@ -21,7 +21,8 @@ int	make_threads(t_env *env, int i, int ret)
 	{
 		env->ph[i].last_eat_time = get_milli_time();
 		env->ph[i].start_time = time;
-		if (pthread_create(&env->ph[i].thread, NULL, &routine, (void *)&env->ph[i]) != 0)
+		if (pthread_create(&env->ph[i].thread,
+				NULL, &routine, (void *)&env->ph[i]) != 0)
 		{
 			print_error("Pthread create error.");
 			return (ret ++);
