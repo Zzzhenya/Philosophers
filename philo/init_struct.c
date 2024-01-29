@@ -14,7 +14,7 @@
 
 void	setup_env(t_env *env, int argc, char **argv)
 {
-	env->ph_num	= ft_atoi(argv[1]);
+	env->ph_num = ft_atoi(argv[1]);
 	env->eat_len = ft_atoi(argv[3]);
 	env->sleep_len = ft_atoi(argv[4]);
 	env->life_len = ft_atoi(argv[2]);

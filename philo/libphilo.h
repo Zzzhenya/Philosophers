@@ -66,6 +66,7 @@ typedef struct s_env
 } t_env;
 
 /* main.c */
+int			clean_allocs(t_env *env, int l, int ret);
 
 /* input_check.c */
 
@@ -101,15 +102,15 @@ void		print_error(char *str);
 
 long long 	get_milli_time(void);
 int 		custom_sleep(long long millilen);
-int	is_alive(t_philo *philo);
-void print(t_philo *philo, char *msg);
+int			is_alive(t_philo *philo);
+void 		print(t_philo *philo, char *msg);
 
 /* eat_routine.c */
-void	philo_eat(t_philo *philo);
-int	routine_for_one(t_philo *philo);
+void		philo_eat(t_philo *philo);
+int			routine_for_one(t_philo *philo);
 
 /* routine.c */
-void *routine(void *arg);
+void 		*routine(void *arg);
 
 
 /* debug.c */
