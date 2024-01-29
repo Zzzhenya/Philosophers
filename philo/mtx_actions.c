@@ -84,12 +84,12 @@ int	init_forkmtx(t_env *env)
 		if (pthread_mutex_init(&env->ph[i].mtx_last_eat, NULL) != 0)
 		{
 			print_error("last meal mutex init error.");
-			return ( (i + 1) + PHILO_MAX);
+			return ((i + 1) + PHILO_MAX);
 		}
 		if (pthread_mutex_init(&env->ph[i].mtx_status, NULL) != 0)
 		{
 			print_error("philo status mutex init error.");
-			return ( (i + 1) + (PHILO_MAX * 2));
+			return ((i + 1) + (PHILO_MAX * 2));
 		}
 		i ++;
 	}

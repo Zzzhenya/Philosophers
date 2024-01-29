@@ -43,7 +43,7 @@ int	time_to_die(t_env *env, int i)
 	}
 	pthread_mutex_unlock(&env->ph[i].mtx_last_eat);
 	return (0);
-}	
+}
 
 int	eat_count_complete(t_env *env)
 {
@@ -57,7 +57,7 @@ int	eat_count_complete(t_env *env)
 	{
 		pthread_mutex_unlock(&env->mtx_eat_philos);
 		return (0);
-	} 
+	}
 }
 
 void	*checker(void *arg)
@@ -68,7 +68,7 @@ void	*checker(void *arg)
 	env = (t_env *)arg;
 	i = 0;
 	if (env->ph_num == 1)
-		return((void *)0);
+		return ((void *)0);
 	while (1)
 	{
 		i = 0;
