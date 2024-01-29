@@ -93,7 +93,7 @@ int 		destroy_all(t_env *env, int type);
 
 void *checker(void *arg);
 
-/* print_message.c */
+/* print_error.c */
 
 void		print_error(char *str);
 

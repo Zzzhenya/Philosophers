@@ -19,12 +19,11 @@ CFLAGS	= -Wall -Werror -Wextra -pthread
 CFLAGS += -g -fsanitize=thread
 
 SRCS	= 	main.c input_check.c \
-			print_message.c init_struct.c \
+			print_error.c init_struct.c \
 			debug.c mtx_actions.c \
 			init_dining.c \
 			utils.c routine.c eat_routine.c\
 			monitor.c \
-			#
 
 RM		= rm -rf
 

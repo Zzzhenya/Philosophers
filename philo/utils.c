@@ -12,20 +12,23 @@
 
 #include "libphilo.h"
 
-long long get_milli_time(void)
+long long	get_milli_time(void)
 {
 	struct timeval	time;
 	long long		militime;
 
 	if (gettimeofday(&time, NULL) == -1)
-		return (-1);
+	{
+		print_error("gettimeofday() error.");
+		return (0);
+	}
 	militime = (time.tv_sec * 1000) + (time.tv_usec / 1000);
 	return (militime);
 }
 
 int custom_sleep(long long millilen)
 {
-	long long start;
+	long long	start;
 
 	start = get_milli_time();
 	while ((get_milli_time() - start) < millilen)
@@ -47,9 +50,9 @@ int	is_alive(t_philo *philo)
 	return (0);
 }
 
-void print(t_philo *philo, char *msg)
+void	print(t_philo *philo, char *msg)
 {
-	long long currtime;
+	long long	currtime;
 
 	if (is_alive(philo))
 	{

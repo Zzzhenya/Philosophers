@@ -12,9 +12,11 @@
 
 #include "libphilo.h"
 
-void kill_all_threads(t_env *env)
+void	kill_all_threads(t_env *env)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (i < env->ph_num)
 	{
 		pthread_mutex_lock(&env->ph[i].mtx_status);
@@ -24,9 +26,9 @@ void kill_all_threads(t_env *env)
 	}
 }
 
-int time_to_die(t_env *env, int i)
+int	time_to_die(t_env *env, int i)
 {
-	long long time;
+	long long	time;
 
 	pthread_mutex_lock(&env->ph[i].mtx_last_eat);
 	time = get_milli_time();
@@ -43,7 +45,7 @@ int time_to_die(t_env *env, int i)
 	return (0);
 }	
 
-int eat_count_complete(t_env *env)
+int	eat_count_complete(t_env *env)
 {
 	pthread_mutex_lock(&env->mtx_eat_philos);
 	if (env->eat_philo_count == 0)
@@ -58,12 +60,13 @@ int eat_count_complete(t_env *env)
 	} 
 }
 
-void *checker(void *arg)
+void	*checker(void *arg)
 {
 	t_env	*env;
 	int		i;
 
 	env = (t_env *)arg;
+	i = 0;
 	if (env->ph_num == 1)
 		return((void *)0);
 	while (1)
@@ -80,4 +83,4 @@ void *checker(void *arg)
 		}
 	}
 	return ((void *)0);
-}	
+}

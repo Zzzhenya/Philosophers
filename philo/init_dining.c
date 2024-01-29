@@ -12,13 +12,11 @@
 
 #include "libphilo.h"
 
-int make_threads(t_env *env, int i, int ret)
+int	make_threads(t_env *env, int i, int ret)
 {
 	long long time;
 
 	time = get_milli_time();
-	if (time <= 0)
-		return (1);
 	while (i < env->ph_num)
 	{
 		env->ph[i].last_eat_time = get_milli_time();
@@ -38,7 +36,7 @@ int make_threads(t_env *env, int i, int ret)
 	return (ret);
 }
 
-int join_threads(t_env *env, int i, int ret)
+int	join_threads(t_env *env, int i, int ret)
 {
 	while (i < env->ph_num )
 	{

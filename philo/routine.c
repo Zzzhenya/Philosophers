@@ -1,17 +1,17 @@
 #include "libphilo.h"
 
-void philo_sleep(t_philo *philo)
+void	philo_sleep(t_philo *philo)
 {
 	print(philo, "is sleeping");
 	custom_sleep(philo->sleep_len);
 }
 
-void philo_think(t_philo *philo)
+void	philo_think(t_philo *philo)
 {
 	print(philo, "is thinking");
 }
 
-void optional_counter(t_philo *philo)
+void	optional_counter(t_philo *philo)
 {
 	if (philo->eat_count > -1)
 		philo->eat_count --;
@@ -23,12 +23,11 @@ void optional_counter(t_philo *philo)
 	}
 }
 
-void *routine(void *arg)
+void	*routine(void *arg)
 {
-	t_philo *philo;
+	t_philo	*philo;
 
 	philo = (t_philo *)arg;
-	//philo->last_eat_time = get_milli_time();
 	philo_think(philo);
 	if (philo->ph_num == 1)
 	{

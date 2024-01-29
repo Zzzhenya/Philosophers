@@ -12,10 +12,10 @@
 
 #include "libphilo.h"
 
-int destroy_forks(t_env *env)
+int	destroy_forks(t_env *env)
 {
-	int i;
-	int ret;
+	int	i;
+	int	ret;
 
 	i = 0;
 	ret = 0;
@@ -41,11 +41,9 @@ int destroy_forks(t_env *env)
 	return (ret);
 }
 
-// Do I have to remove the already initiated threads?
-
-int destroy_all(t_env *env, int type)
+int	destroy_all(t_env *env, int type)
 {
-	int ret;
+	int	ret;
 
 	ret = 0;
 	if (pthread_mutex_destroy(&env->mtx_print) != 0)
@@ -74,11 +72,9 @@ int destroy_all(t_env *env, int type)
 		return (ret);
 }
 
-// if error Destroy previously created mutexes 
-
-int init_forkmtx(t_env *env)
+int	init_forkmtx(t_env *env)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (i < env->ph_num)
@@ -102,8 +98,6 @@ int init_forkmtx(t_env *env)
 	}
 	return (0);
 }
-
-// if error Destroy previously created mutexes
 
 int	init_mtx(t_env *env)
 {
