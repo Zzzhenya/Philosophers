@@ -26,7 +26,7 @@ long long	get_milli_time(void)
 	return (militime);
 }
 
-int custom_sleep(long long millilen)
+int	custom_sleep(long long millilen)
 {
 	long long	start;
 
@@ -54,12 +54,12 @@ void	print(t_philo *philo, char *msg)
 {
 	long long	currtime;
 
+	currtime = 0;
 	if (is_alive(philo))
 	{
 		pthread_mutex_lock(philo->mtx_print);
 		currtime = get_milli_time();
-		printf("%lld %d %s\n", currtime - philo->start_time,  philo->id, msg);
+		printf("%lld %d %s\n", currtime - philo->start_time, philo->id, msg);
 		pthread_mutex_unlock(philo->mtx_print);
 	}
-	
 }

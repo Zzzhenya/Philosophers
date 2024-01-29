@@ -39,7 +39,7 @@ int	allocate_memory(t_env *env)
 	memset(env->ph, '\0', env->ph_num * sizeof(t_philo));
 	env->forks = malloc (sizeof(int) * env->ph_num);
 	if (!env->forks)
-		return(clean_allocs(env, 2, 2));
+		return (clean_allocs(env, 2, 2));
 	memset(env->forks, '0', env->ph_num * sizeof(int));
 	env->mtx_forks = malloc (sizeof(pthread_mutex_t) * env->ph_num);
 	if (!env->mtx_forks)
