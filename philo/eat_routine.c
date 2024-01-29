@@ -2,7 +2,7 @@
 
 void	update_meal_time(t_philo *philo)
 {
-	long long currtime;
+	long long	currtime;
 
 	pthread_mutex_lock(&philo->mtx_last_eat);
 	currtime = get_milli_time();
@@ -40,7 +40,6 @@ void	return_fork(t_philo *philo, char d)
 		pthread_mutex_unlock(philo->ptr_mtx_rfork);
 		print(philo, "put down a fork");
 	}
-
 }
 
 int	routine_for_one(t_philo *philo)

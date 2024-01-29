@@ -14,7 +14,7 @@
 
 int	make_threads(t_env *env, int i, int ret)
 {
-	long long time;
+	long long	time;
 
 	time = get_milli_time();
 	while (i < env->ph_num)
@@ -38,7 +38,7 @@ int	make_threads(t_env *env, int i, int ret)
 
 int	join_threads(t_env *env, int i, int ret)
 {
-	while (i < env->ph_num )
+	while (i < env->ph_num)
 	{
 		if (pthread_join(env->ph[i].thread, NULL) != 0)
 		{
@@ -55,7 +55,7 @@ int	join_threads(t_env *env, int i, int ret)
 	return (ret);
 }
 
-int init_dining(t_env *env)
+int	init_dining(t_env *env)
 {
 	if (make_threads(env, 0, 0) != 0)
 		return (destroy_all(env, 1));

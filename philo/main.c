@@ -55,7 +55,6 @@ int	main(int argc, char **argv)
 {
 	t_env	env;
 
-	env = NULL;
 	if (argc != 5 && argc != 6)
 	{
 		print_error("Usage(ms): #philo die eat sleep [eat_count]");

@@ -56,13 +56,10 @@ int	destroy_all(t_env *env, int type)
 		print_error ("Pthread status check mutex destroy error.");
 		ret ++;
 	}
-	if (env->eat_count >= 0)
+	if (pthread_mutex_destroy(&env->mtx_eat_philos) != 0)
 	{
-		if (pthread_mutex_destroy(&env->mtx_eat_philos) != 0)
-		{
-			print_error ("Eat count check mutex destroy error.");
-			ret ++;
-		}
+		print_error ("Eat count check mutex destroy error.");
+		ret ++;
 	}
 	if (destroy_forks(env) != 0)
 		ret ++;
@@ -111,13 +108,10 @@ int	init_mtx(t_env *env)
 		print_error("Thread status check mutex init error.");
 		return (2);
 	}
-	if (env->eat_count > 0)
+	if (pthread_mutex_init(&env->mtx_eat_philos, NULL) != 0)
 	{
-		if (pthread_mutex_init(&env->mtx_eat_philos, NULL) != 0)
-		{
-			print_error("Eat count check mutex init error.");
-			return (3);
-		}
+		print_error("Eat count check mutex init error.");
+		return (3);
 	}
 	if (init_forkmtx(env) != 0)
 		return (4);
