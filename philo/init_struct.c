@@ -14,12 +14,12 @@
 
 void	setup_env(t_env *env, int argc, char **argv)
 {
-	env->ph_num = ft_atoi(argv[1]);
-	env->eat_len = ft_atoi(argv[3]);
-	env->sleep_len = ft_atoi(argv[4]);
-	env->life_len = ft_atoi(argv[2]);
+	env->ph_num = ft_atol(argv[1]);
+	env->eat_len = ft_atol(argv[3]);
+	env->sleep_len = ft_atol(argv[4]);
+	env->life_len = ft_atol(argv[2]);
 	if (argc == 6)
-		env->eat_count = ft_atoi(argv[5]);
+		env->eat_count = ft_atol(argv[5]);
 	else
 		env->eat_count = -1;
 	env->eat_philo_count = env->ph_num;
