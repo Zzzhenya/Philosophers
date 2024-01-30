@@ -21,7 +21,7 @@
 # include <sys/time.h>
 
 # define PHILO_MAX 200
-# define USLEEP_MAX 1000000
+# define INT_MAX 2147483647
 
 typedef struct s_philo
 {
@@ -71,7 +71,7 @@ int			clean_allocs(t_env *env, int l, int ret);
 /* input_check.c */
 
 int			bad_input(char **argv);
-int			ft_atoi(const char *nptr);
+long		ft_atol(const char *nptr);
 
 /* init_struct.c */
 
