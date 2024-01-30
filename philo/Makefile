@@ -27,7 +27,7 @@ SRCS	= 	main.c input_check.c \
 
 RM		= rm -rf
 
-INCLUDE	= libphilo.h errors.h
+INCLUDE	= libphilo.h
 
 OBJS	= $(SRCS:.c=.o)
 
@@ -51,9 +51,6 @@ fclean : clean
 
 re : fclean all
 
-race:
-	make re
-
 #debug:
 #	make re
 #	export MallocStackLogging=1
@@ -61,4 +58,4 @@ race:
 #	leaks --atExit -- ./$(NAME) > log.txt 2>&1
 #	make fclean
 
-.PHONY : all clean fclean re debug race
+.PHONY : all clean fclean re debug
