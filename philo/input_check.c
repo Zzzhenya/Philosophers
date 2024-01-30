@@ -12,10 +12,10 @@
 
 #include "libphilo.h"
 
-int	ft_atoi(const char *nptr)
+long	ft_atol(const char *nptr)
 {
 	int		i;
-	int		n;
+	long	n;
 	int		sign;
 
 	i = 0;
@@ -53,15 +53,15 @@ static int	not_int(char *str)
 
 int	not_in_range(char *str, int i)
 {
-	int	ret;
+	long	ret;
 
-	ret = ft_atoi(str);
-	if (ret <= 0)
+	ret = ft_atol(str);
+	if (ret <= 0 || ret > INT_MAX)
 	{
-		print_error("Philos and times should be larger than 0.");
+		print_error("Philos and times should be > 0 < INT_MAX");
 		return (1);
 	}
-	else if (i == 1 && ret > 200)
+	else if (i == 1 && ret > PHILO_MAX)
 	{
 		print_error("Maximum number of 200 Philosophers.");
 		return (3);
@@ -76,6 +76,7 @@ int	bad_input(char **argv)
 	int	val;
 
 	i = 1;
+	val = 0;
 	while (argv[i])
 	{
 		if (not_int(argv[i]))
