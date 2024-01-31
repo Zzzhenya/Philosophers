@@ -40,6 +40,17 @@ void	*routine(void *arg)
 	t_philo	*philo;
 
 	philo = (t_philo *)arg;
+	while (1)
+	{
+		pthread_mutex_lock(philo->mtx_ready);
+		if (*philo->ready == 1)
+		{
+			pthread_mutex_unlock(philo->mtx_ready);
+			break;
+		}
+		pthread_mutex_unlock(philo->mtx_ready);
+		usleep (100);
+	}
 	philo_think(philo);
 	if (philo->ph_num == 1)
 	{

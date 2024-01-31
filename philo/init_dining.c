@@ -29,6 +29,16 @@ int	make_threads(t_env *env, int i, int ret)
 		}
 		i ++;
 	}
+	i = 0;
+	while (i < env->ph_num)
+	{
+		env->ph[i].start_time = get_milli_time();
+		env->ph[i].last_eat_time = get_milli_time();
+		i ++;
+	}
+	pthread_mutex_lock(&env->mtx_ready);
+	env->ready = 1;
+	pthread_mutex_unlock(&env->mtx_ready);
 	if (pthread_create(&env->monitor, NULL, &checker, env) != 0)
 	{
 		print_error("Pthread create error for monitor.");
