@@ -62,18 +62,18 @@ void	setup_forks(t_env *env, int i)
 {
 	while (i < env->ph_num)
 	{
-		if (i == 0)
+		if (i == env->ph_num - 1)
 		{
-			env->ph[i].ptr_lfork = &env->forks[env->ph_num - 1];
-			env->ph[i].ptr_mtx_lfork = &env->mtx_forks[env->ph_num - 1];
+			env->ph[i].ptr_rfork = &env->forks[0];
+			env->ph[i].ptr_mtx_rfork = &env->mtx_forks[0];
 		}
 		else
 		{
-			env->ph[i].ptr_lfork = &env->forks[i - 1];
-			env->ph[i].ptr_mtx_lfork = &env->mtx_forks[i - 1];
+			env->ph[i].ptr_rfork = &env->forks[i + 1];
+			env->ph[i].ptr_mtx_rfork = &env->mtx_forks[i + 1];
 		}
-		env->ph[i].ptr_rfork = &env->forks[i];
-		env->ph[i].ptr_mtx_rfork = &env->mtx_forks[i];
+		env->ph[i].ptr_lfork = &env->forks[i];
+		env->ph[i].ptr_mtx_lfork = &env->mtx_forks[i];
 		i ++;
 	}
 }

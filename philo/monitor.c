@@ -36,9 +36,9 @@ int	time_to_die(t_env *env, int i)
 	{
 		pthread_mutex_unlock(&env->ph[i].mtx_last_eat);
 		print(&env->ph[i], "is dead");
-		pthread_mutex_lock(&env->mtx_dead);
+		//pthread_mutex_lock(&env->mtx_dead);
 		env->dead = 1;
-		pthread_mutex_unlock(&env->mtx_dead);
+		//pthread_mutex_unlock(&env->mtx_dead);
 		return (1);
 	}
 	pthread_mutex_unlock(&env->ph[i].mtx_last_eat);

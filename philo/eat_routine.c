@@ -69,7 +69,8 @@ int	routine_for_one(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	if ((philo->id % 2))
+	
+	if ((philo->id % 2) == 0)
 	{
 		pick_fork(philo, 'l');
 		pick_fork(philo, 'r');
@@ -86,7 +87,7 @@ void	philo_eat(t_philo *philo)
 		update_meal_time(philo);
 		print(philo, "is eating");
 		custom_sleep(philo->eat_len);
-		return_fork(philo, 'r');
 		return_fork(philo, 'l');
+		return_fork(philo, 'r');
 	}
 }

@@ -56,7 +56,13 @@ void	*routine(void *arg)
 	{
 		routine_for_one (philo);
 		return ((void *)0);
-	}
+	}/*
+	if (philo->ph_num % 2 && philo->id % 2)
+	{
+		//usleep (1000);
+		if (philo->id == philo->ph_num%2)
+			custom_sleep(philo->eat_len);
+	}*/
 	while (is_alive(philo))
 	{
 		philo_eat(philo);
