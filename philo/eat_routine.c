@@ -67,27 +67,99 @@ int	routine_for_one(t_philo *philo)
 	return (0);
 }
 
+void	get_forks(t_philo *philo)
+{
+	while (1)
+	{
+		pthread_mutex_lock(philo->ptr_mtx_lfork);
+		if (*philo->ptr_lfork == 0)
+		{
+			while (1)
+			{
+				pthread_mutex_lock(philo->ptr_mtx_rfork);
+				if (*philo->ptr_rfork == 0)
+				{
+					print(philo, "got forks");
+					*philo->ptr_lfork = philo->id;
+					*philo->ptr_rfork = philo->id;
+					pthread_mutex_unlock(philo->ptr_mtx_rfork);
+					pthread_mutex_unlock(philo->ptr_mtx_lfork);
+					return ;
+				}
+				else
+				{
+					pthread_mutex_unlock(philo->ptr_mtx_rfork);
+					usleep (100);
+				}
+			}
+		}
+		else
+		{
+			pthread_mutex_unlock(philo->ptr_mtx_lfork);
+			usleep(100);
+		}
+	}
+}
+
+void drop_forks(t_philo *philo)
+{
+	while (1)
+	{
+		pthread_mutex_lock(philo->ptr_mtx_lfork);
+		if (*philo->ptr_lfork == philo->id)
+		{
+			while (1)
+			{
+				pthread_mutex_lock(philo->ptr_mtx_rfork);
+				if (*philo->ptr_rfork == philo->id)
+				{
+					print(philo, "released forks");
+					*philo->ptr_lfork = 0;
+					*philo->ptr_rfork = 0;
+					pthread_mutex_unlock(philo->ptr_mtx_rfork);
+					pthread_mutex_unlock(philo->ptr_mtx_lfork);
+					return ;
+				}
+				else
+				{
+					pthread_mutex_unlock(philo->ptr_mtx_rfork);
+					usleep (100);
+				}
+			}
+		}
+		else
+		{
+			pthread_mutex_unlock(philo->ptr_mtx_lfork);
+			usleep(100);
+		}
+	}
+}
+
 void	philo_eat(t_philo *philo)
 {
 	
 	if ((philo->id % 2) == 0)
 	{
-		pick_fork(philo, 'l');
-		pick_fork(philo, 'r');
+		get_forks(philo);
+		//pick_fork(philo, 'l');
+		//pick_fork(philo, 'r');
 		update_meal_time(philo);
 		print(philo, "is eating");
 		custom_sleep(philo->eat_len);
-		return_fork(philo, 'l');
-		return_fork(philo, 'r');
+		drop_forks(philo);
+		//return_fork(philo, 'l');
+		//return_fork(philo, 'r');
 	}
 	else
 	{
-		pick_fork(philo, 'r');
-		pick_fork(philo, 'l');
+		get_forks(philo);
+		//pick_fork(philo, 'r');
+		//pick_fork(philo, 'l');
 		update_meal_time(philo);
 		print(philo, "is eating");
 		custom_sleep(philo->eat_len);
-		return_fork(philo, 'l');
-		return_fork(philo, 'r');
+		//return_fork(philo, 'l');
+		//return_fork(philo, 'r');
+		drop_forks(philo);
 	}
 }
