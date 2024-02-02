@@ -80,8 +80,8 @@ void	get_forks(t_philo *philo)
 				print(philo, "got forks");
 				*philo->ptr_lfork = philo->id;
 				*philo->ptr_rfork = philo->id;
-				pthread_mutex_unlock(philo->ptr_mtx_rfork);
-				pthread_mutex_unlock(philo->ptr_mtx_lfork);
+				//pthread_mutex_unlock(philo->ptr_mtx_rfork);
+				//pthread_mutex_unlock(philo->ptr_mtx_lfork);
 				return ;
 			}
 			else
