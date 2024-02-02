@@ -67,7 +67,7 @@ int	routine_for_one(t_philo *philo)
 	return (0);
 }
 
-void	get_forks(t_philo *philo)
+void	get_forks_ev(t_philo *philo)
 {
 	while (1)
 	{
@@ -96,6 +96,40 @@ void	get_forks(t_philo *philo)
 		else
 		{
 			pthread_mutex_unlock(philo->ptr_mtx_lfork);
+			usleep(100);
+		}
+	}
+}
+
+void	get_forks_od(t_philo *philo)
+{
+	while (1)
+	{
+		pthread_mutex_lock(philo->ptr_mtx_rfork);
+		if (*philo->ptr_rfork == 0)
+		{
+			while (1)
+			{
+				pthread_mutex_lock(philo->ptr_mtx_lfork);
+				if (*philo->ptr_lfork == 0)
+				{
+					print(philo, "got forks");
+					*philo->ptr_rfork = philo->id;
+					*philo->ptr_lfork = philo->id;
+					pthread_mutex_unlock(philo->ptr_mtx_lfork);
+					pthread_mutex_unlock(philo->ptr_mtx_rfork);
+					return ;
+				}
+				else
+				{
+					pthread_mutex_unlock(philo->ptr_mtx_lfork);
+					usleep (100);
+				}
+			}
+		}
+		else
+		{
+			pthread_mutex_unlock(philo->ptr_mtx_rfork);
 			usleep(100);
 		}
 	}
@@ -140,7 +174,7 @@ void	philo_eat(t_philo *philo)
 	
 	if ((philo->id % 2) == 0)
 	{
-		get_forks(philo);
+		get_forks_ev(philo);
 		//pick_fork(philo, 'l');
 		//pick_fork(philo, 'r');
 		update_meal_time(philo);
@@ -152,7 +186,7 @@ void	philo_eat(t_philo *philo)
 	}
 	else
 	{
-		get_forks(philo);
+		get_forks_od(philo);
 		//pick_fork(philo, 'r');
 		//pick_fork(philo, 'l');
 		update_meal_time(philo);
