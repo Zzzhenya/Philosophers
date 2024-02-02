@@ -80,8 +80,8 @@ void	get_forks(t_philo *philo)
 				print(philo, "got forks");
 				*philo->ptr_lfork = philo->id;
 				*philo->ptr_rfork = philo->id;
-				//pthread_mutex_unlock(philo->ptr_mtx_rfork);
-				//pthread_mutex_unlock(philo->ptr_mtx_lfork);
+				pthread_mutex_unlock(philo->ptr_mtx_rfork);
+				pthread_mutex_unlock(philo->ptr_mtx_lfork);
 				return ;
 			}
 			else
@@ -106,23 +106,21 @@ void drop_forks(t_philo *philo)
 		pthread_mutex_lock(philo->ptr_mtx_lfork);
 		if (*philo->ptr_lfork == philo->id)
 		{
-			while (1)
+			pthread_mutex_lock(philo->ptr_mtx_rfork);
+			if (*philo->ptr_rfork == philo->id)
 			{
-				pthread_mutex_lock(philo->ptr_mtx_rfork);
-				if (*philo->ptr_rfork == philo->id)
-				{
-					print(philo, "released forks");
-					*philo->ptr_lfork = 0;
-					*philo->ptr_rfork = 0;
-					pthread_mutex_unlock(philo->ptr_mtx_rfork);
-					pthread_mutex_unlock(philo->ptr_mtx_lfork);
-					return ;
-				}
-				else
-				{
-					pthread_mutex_unlock(philo->ptr_mtx_rfork);
-					usleep (100);
-				}
+				print(philo, "released forks");
+				*philo->ptr_lfork = 0;
+				*philo->ptr_rfork = 0;
+				pthread_mutex_unlock(philo->ptr_mtx_rfork);
+				pthread_mutex_unlock(philo->ptr_mtx_lfork);
+				return ;
+			}
+			else
+			{
+				pthread_mutex_unlock(philo->ptr_mtx_rfork);
+				pthread_mutex_unlock(philo->ptr_mtx_lfork);
+				//usleep (100);
 			}
 		}
 		else
