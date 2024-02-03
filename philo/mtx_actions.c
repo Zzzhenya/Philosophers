@@ -41,11 +41,8 @@ int	destroy_forks(t_env *env)
 	return (ret);
 }
 
-int	destroy_all(t_env *env, int type)
+int	destroy_env_mtx(t_env *env, int ret)
 {
-	int	ret;
-
-	ret = 0;
 	if (pthread_mutex_destroy(&env->mtx_print) != 0)
 	{
 		print_error ("Print mutex destroy error.");
@@ -66,8 +63,16 @@ int	destroy_all(t_env *env, int type)
 		print_error ("Ready check mutex destroy error.");
 		ret ++;
 	}
-	if (destroy_forks(env) != 0)
-		ret ++;
+	return (ret);
+}
+
+int	destroy_all(t_env *env, int type)
+{
+	int	ret;
+
+	ret = 0;
+	ret += destroy_env_mtx(env, ret);
+	ret += destroy_forks(env);
 	if (type == 1)
 		return (2);
 	else
