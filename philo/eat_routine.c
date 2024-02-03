@@ -35,7 +35,7 @@ int	routine_for_one(t_philo *philo)
 	return (0);
 }
 
-void	get_forks(t_philo *philo)
+void	get_forks_lr(t_philo *philo)
 {
 	while (1)
 	{
@@ -67,7 +67,39 @@ void	get_forks(t_philo *philo)
 	}
 }
 
-void drop_forks(t_philo *philo)
+void	get_forks_rl(t_philo *philo)
+{
+	while (1)
+	{
+		pthread_mutex_lock(philo->ptr_mtx_rfork);
+		if (*philo->ptr_rfork == 0)
+		{
+			pthread_mutex_lock(philo->ptr_mtx_lfork);
+			if (*philo->ptr_lfork == 0)
+			{
+				print(philo, "got forks");
+				*philo->ptr_rfork = philo->id;
+				*philo->ptr_lfork = philo->id;
+				pthread_mutex_unlock(philo->ptr_mtx_lfork);
+				pthread_mutex_unlock(philo->ptr_mtx_rfork);
+				return ;
+			}
+			else
+			{
+				pthread_mutex_unlock(philo->ptr_mtx_lfork);
+				pthread_mutex_unlock(philo->ptr_mtx_rfork);
+				usleep(10);
+			}
+		}
+		else
+		{
+			pthread_mutex_unlock(philo->ptr_mtx_rfork);
+			usleep(10);
+		}
+	}
+}
+
+void drop_forks_lr(t_philo *philo)
 {
 	while (1)
 	{
@@ -99,17 +131,55 @@ void drop_forks(t_philo *philo)
 	}
 }
 
+void drop_forks_rl(t_philo *philo)
+{
+	while (1)
+	{
+		pthread_mutex_lock(philo->ptr_mtx_rfork);
+		if (*philo->ptr_rfork == philo->id)
+		{
+			pthread_mutex_lock(philo->ptr_mtx_lfork);
+			if (*philo->ptr_lfork == philo->id)
+			{
+				print(philo, "released forks");
+				*philo->ptr_rfork = 0;
+				*philo->ptr_lfork = 0;
+				pthread_mutex_unlock(philo->ptr_mtx_lfork);
+				pthread_mutex_unlock(philo->ptr_mtx_rfork);
+				return ;
+			}
+			else
+			{
+				pthread_mutex_unlock(philo->ptr_mtx_lfork);
+				pthread_mutex_unlock(philo->ptr_mtx_rfork);
+				usleep (10);
+			}
+		}
+		else
+		{
+			pthread_mutex_unlock(philo->ptr_mtx_rfork);
+			usleep(10);
+		}
+	}
+}
+
 void	philo_eat(t_philo *philo)
 {
-	get_forks(philo);
-	update_meal_time(philo);
-	print(philo, "is eating");
-	custom_sleep(philo->eat_len);
 	if ((philo->id % 2) == 0)
-		drop_forks(philo);
+	{
+		get_forks_rl(philo);
+		update_meal_time(philo);
+		print(philo, "is eating");
+		custom_sleep(philo->eat_len);
+		drop_forks_rl(philo);
+	}
 	else
 	{
+		get_forks_lr(philo);
+		update_meal_time(philo);
+		print(philo, "is eating");
+		custom_sleep(philo->eat_len);
 		usleep (1000);
-		drop_forks(philo);
+		drop_forks_lr(philo);
 	}
 }
