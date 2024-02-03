@@ -48,7 +48,6 @@ void	check_ready(t_philo *philo)
 		pthread_mutex_unlock(philo->mtx_ready);
 		usleep (100);
 	}
-
 }
 
 void	*routine(void *arg)

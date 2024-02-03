@@ -57,12 +57,12 @@ typedef struct s_env
 	int					eat_count;
 	int					eat_philo_count;
 	int					dead;
-	int 				ready;
+	int					ready;
 	int					*forks;
 	int					*status;
 	t_philo				*ph;
 	pthread_mutex_t		*mtx_forks;
-	pthread_mutex_t 	mtx_ready;
+	pthread_mutex_t		mtx_ready;
 	pthread_t			monitor;
 	pthread_mutex_t		mtx_eat_philos;
 	pthread_mutex_t		mtx_print;
