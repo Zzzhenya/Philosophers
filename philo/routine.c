@@ -68,6 +68,8 @@ void	*routine(void *arg)
 		/*if (philo->ph_num % 2 != 0)
 			custom_sleep(philo->eat_len);*/
 		custom_sleep(1);
+		if (philo->id % 2 == 0)
+			usleep (100);
 	}
 	return ((void *)0);
 }

@@ -45,9 +45,10 @@ void	get_forks_lr(t_philo *philo)
 			pthread_mutex_lock(philo->ptr_mtx_rfork);
 			if (*philo->ptr_rfork == 0)
 			{
-				print(philo, "got forks");
 				*philo->ptr_lfork = philo->id;
+				print(philo, "picked a fork");
 				*philo->ptr_rfork = philo->id;
+				print(philo, "picked a fork");
 				pthread_mutex_unlock(philo->ptr_mtx_rfork);
 				pthread_mutex_unlock(philo->ptr_mtx_lfork);
 				return ;
@@ -77,9 +78,10 @@ void	get_forks_rl(t_philo *philo)
 			pthread_mutex_lock(philo->ptr_mtx_lfork);
 			if (*philo->ptr_lfork == 0)
 			{
-				print(philo, "got forks");
 				*philo->ptr_rfork = philo->id;
+				print(philo, "picked a fork");
 				*philo->ptr_lfork = philo->id;
+				print(philo, "picked a fork");
 				pthread_mutex_unlock(philo->ptr_mtx_lfork);
 				pthread_mutex_unlock(philo->ptr_mtx_rfork);
 				return ;
@@ -109,7 +111,7 @@ void drop_forks_lr(t_philo *philo)
 			pthread_mutex_lock(philo->ptr_mtx_rfork);
 			if (*philo->ptr_rfork == philo->id)
 			{
-				print(philo, "released forks");
+				//print(philo, "released forks");
 				*philo->ptr_lfork = 0;
 				*philo->ptr_rfork = 0;
 				pthread_mutex_unlock(philo->ptr_mtx_rfork);
@@ -141,7 +143,7 @@ void drop_forks_rl(t_philo *philo)
 			pthread_mutex_lock(philo->ptr_mtx_lfork);
 			if (*philo->ptr_lfork == philo->id)
 			{
-				print(philo, "released forks");
+				//print(philo, "released forks");
 				*philo->ptr_rfork = 0;
 				*philo->ptr_lfork = 0;
 				pthread_mutex_unlock(philo->ptr_mtx_lfork);
@@ -167,19 +169,18 @@ void	philo_eat(t_philo *philo)
 {
 	if ((philo->id % 2) == 0)
 	{
+		get_forks_lr(philo);
+		update_meal_time(philo);
+		print(philo, "is eating");
+		custom_sleep(philo->eat_len);
+		drop_forks_lr(philo);
+	}
+	else
+	{
 		get_forks_rl(philo);
 		update_meal_time(philo);
 		print(philo, "is eating");
 		custom_sleep(philo->eat_len);
 		drop_forks_rl(philo);
-	}
-	else
-	{
-		get_forks_lr(philo);
-		update_meal_time(philo);
-		print(philo, "is eating");
-		custom_sleep(philo->eat_len);
-		usleep (1000);
-		drop_forks_lr(philo);
 	}
 }
