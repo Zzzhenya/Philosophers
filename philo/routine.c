@@ -35,22 +35,28 @@ void	optional_counter(t_philo *philo)
 	}
 }
 
-void	*routine(void *arg)
+void	check_ready(t_philo *philo)
 {
-	t_philo	*philo;
-
-	philo = (t_philo *)arg;
 	while (1)
 	{
 		pthread_mutex_lock(philo->mtx_ready);
 		if (*philo->ready == 1)
 		{
 			pthread_mutex_unlock(philo->mtx_ready);
-			break;
+			return ;
 		}
 		pthread_mutex_unlock(philo->mtx_ready);
 		usleep (100);
 	}
+
+}
+
+void	*routine(void *arg)
+{
+	t_philo	*philo;
+
+	philo = (t_philo *)arg;
+	check_ready(philo);
 	philo_think(philo);
 	if (philo->ph_num == 1)
 	{
@@ -65,8 +71,6 @@ void	*routine(void *arg)
 		optional_counter(philo);
 		philo_sleep(philo);
 		philo_think(philo);
-		/*if (philo->ph_num % 2 != 0)
-			custom_sleep(philo->eat_len);*/
 		custom_sleep(1);
 	}
 	return ((void *)0);

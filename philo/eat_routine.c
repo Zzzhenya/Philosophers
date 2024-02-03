@@ -69,7 +69,6 @@ int	routine_for_one(t_philo *philo)
 
 void	philo_eat(t_philo *philo)
 {
-	
 	if ((philo->id % 2) == 0)
 	{
 		pick_fork(philo, 'l');
