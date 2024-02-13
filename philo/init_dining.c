@@ -14,10 +14,15 @@
 
 void	update_ready(t_env	*env, int i)
 {
+	long long	time;
+
+	time = get_milli_time();
 	while (i < env->ph_num)
 	{
-		env->ph[i].start_time = get_milli_time();
-		env->ph[i].last_eat_time = get_milli_time();
+		//env->ph[i].start_time = get_milli_time();
+		//env->ph[i].last_eat_time = get_milli_time();
+		env->ph[i].start_time = time;
+		env->ph[i].last_eat_time = time;
 		i ++;
 	}
 	pthread_mutex_lock(&env->mtx_ready);
@@ -27,13 +32,13 @@ void	update_ready(t_env	*env, int i)
 
 int	make_threads(t_env *env, int i, int ret)
 {
-	long long	time;
+	/*long long	time;
 
-	time = get_milli_time();
+	time = get_milli_time();*/
 	while (i < env->ph_num)
 	{
-		env->ph[i].last_eat_time = get_milli_time();
-		env->ph[i].start_time = time;
+		//env->ph[i].last_eat_time = get_milli_time();
+		//env->ph[i].start_time = time;
 		if (pthread_create(&env->ph[i].thread,
 				NULL, &routine, (void *)&env->ph[i]) != 0)
 		{
