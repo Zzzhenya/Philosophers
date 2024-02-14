@@ -34,7 +34,7 @@
 
 5) Why the input configuration 50 410 200 200 fail on a computer that has 8 cores (16 threads) (e.g. Core i7 vPro)?
 
-	A computer with 8 cores can run upto a maximum of 16 threads in parallel. With the odd-even logic, for the 50 philosophers configuration with 410 life-time, for philosophers to not strave to death, at least 25 threads should to run concurrently. The kernal schedules maximum of random 16 (usually less than 16) threads first and the the other 9 threads wait until the kernal schedules them. Because the life-time defined for the configuration is too low, the monitor detects them as hungry and kill the threads to terminate the simulation. 
+	A computer with 8 cores can run upto a maximum of 16 threads concurrently. With the odd-even logic, for the 50 philosophers configuration with 410 life-time, for philosophers to not strave to death, at least 25 threads should to run concurrently. The kernal schedules maximum of random 16 (usually less than 16) threads first and the the other 9 threads wait until the kernal schedules them. Because the life-time defined for the configuration is too low, the monitor detects them as hungry and kill the threads to terminate the simulation. 
 
 	In such a computer, 410 200 200 configuration could safely work upto 20 philosophers (where no. of philosophers is an even number and there are no other resource intensive processes running in parallel).
 
