@@ -6,7 +6,7 @@
 #    By: sde-silv <sde-silv@student.42berlin.d      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/09 11:55:57 by sde-silv          #+#    #+#              #
-#    Updated: 2024/01/09 11:55:59 by sde-silv         ###   ########.fr        #
+#    Updated: 2024/02/15 13:54:32 by sde-silv         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME	= philo
 
 CFLAGS	= -Wall -Werror -Wextra -pthread
 
-#CFLAGS += -g -fsanitize=thread
+CFLAGS += -g -fsanitize=thread
 
 SRCS	= 	main.c input_check.c \
 			print_error.c init_struct.c \
