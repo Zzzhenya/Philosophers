@@ -44,13 +44,11 @@ void	return_fork(t_philo *philo, char d)
 	{
 		*philo->ptr_lfork = 0;
 		pthread_mutex_unlock(philo->ptr_mtx_lfork);
-		print(philo, "put down a fork");
 	}
 	else if (d == 'r')
 	{
 		*philo->ptr_rfork = 0;
 		pthread_mutex_unlock(philo->ptr_mtx_rfork);
-		print(philo, "put down a fork");
 	}
 }
 
