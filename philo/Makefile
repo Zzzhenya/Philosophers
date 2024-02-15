@@ -16,7 +16,7 @@ NAME	= philo
 
 CFLAGS	= -Wall -Werror -Wextra -pthread
 
-CFLAGS += -g -fsanitize=thread
+#CFLAGS += -g -fsanitize=thread
 
 SRCS	= 	main.c input_check.c \
 			print_error.c init_struct.c \

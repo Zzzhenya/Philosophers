@@ -57,9 +57,9 @@ void	print(t_philo *philo, char *msg)
 	currtime = 0;
 	if (is_alive(philo))
 	{
-		//pthread_mutex_lock(philo->mtx_print);
+		pthread_mutex_lock(philo->mtx_print);
 		currtime = get_milli_time();
 		printf("%lld %d %s\n", currtime - philo->start_time, philo->id, msg);
-		//pthread_mutex_unlock(philo->mtx_print);
+		pthread_mutex_unlock(philo->mtx_print);
 	}
 }
